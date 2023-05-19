@@ -8,7 +8,6 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class TGDD
 {
-//    private $results = array();
     public function scrape()
     {
         $url = 'https://www.thegioididong.com/';
@@ -30,7 +29,7 @@ class TGDD
             });
     }
 
-    public function scrapedtdd()
+    public function scrapeMediaMart()
     {
 
     }
