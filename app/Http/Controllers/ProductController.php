@@ -18,15 +18,16 @@ class ProductController extends Controller
             function (Crawler $node) {
                 $name = $node->filter('p.product-name')->text();
                 $price = $node->filter('p.product-price')->text();
+
+                $price2 = preg_replace('/\D/', '', $price);
                 echo '<pre>';
                 print_r($name);
                 echo '</pre>';
-//                $price2 = preg_replace('/\D/', '', $price);
+
                 echo '<pre>';
                 print_r($price);
                 echo '</pre>';
-            }
-            );
+            });
     }
 
 
