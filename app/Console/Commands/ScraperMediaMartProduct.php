@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Scraper\TGDD;
 use Illuminate\Console\Command;
 
 class ScraperMediaMartProduct extends Command
@@ -11,7 +12,7 @@ class ScraperMediaMartProduct extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'scrape:mediamart';
 
     /**
      * The console command description.
@@ -37,6 +38,7 @@ class ScraperMediaMartProduct extends Command
      */
     public function handle()
     {
-        return 0;
+        $bot = new TGDD();
+        $bot->scrapeMediaMart();
     }
 }
