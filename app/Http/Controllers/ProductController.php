@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Goutte\Client;
 use Illuminate\Http\Request;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\HttpClient\HttpClient;
 
 class ProductController extends Controller
 {
     private $results = array();
     public function scraper(){
-        $client = new Client();
+        $client = new Client(HttpClient::create(['timeout' => 60]));
         $url = 'https://mediamart.vn/';
         $crawler = $client->request('GET',$url);
 
