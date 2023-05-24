@@ -2,17 +2,17 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Weidner\Goutte\GoutteFacade;
 use App\Scraper\TGDD;
-class ScrapeProduct extends Command
+use Illuminate\Console\Command;
+
+class ScraperBoss extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'scrape:product';
+    protected $signature = 'scrape:boss';
 
     /**
      * The console command description.
@@ -39,6 +39,6 @@ class ScrapeProduct extends Command
     public function handle()
     {
         $bot = new TGDD();
-        $bot->scrape();
+        $bot->scrapeBoss();
     }
 }
