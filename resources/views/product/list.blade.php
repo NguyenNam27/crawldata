@@ -18,14 +18,16 @@
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-{{--                            <h3 class="box-title">Danh Sách Sản Phẩm</h3>--}}
+                            {{--                            <h3 class="box-title">Danh Sách Sản Phẩm</h3>--}}
                             <div class="col-sm-3 col-md-3">
                                 <form action="{{route('find')}}" method="POST" class="navbar-form" name="search">
                                     @csrf
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search Product" name="search" id="search">
+                                        <input type="text" class="form-control" placeholder="Search Product"
+                                               name="search" id="search">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                            <button class="btn btn-default" type="submit"><i
+                                                    class="glyphicon glyphicon-search"></i></button>
                                         </div>
                                     </div>
                                 </form>
@@ -76,30 +78,29 @@
     </div>
 @endsection
 @section('my_js')
-<script type="text/javascript">
-    $(document).ready(function(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#search').keyup(function () {
+                var search = $('#search').val();
+                if (search == "") {
+                    // $("#memList").html("");
+                    // $('#result').hide();
+                    console.log('có')
+                } else {
+                    {{--$.get("{{ route('search') }}",{search:search}, function(data){--}}
+                    {{--    $('#memList').empty().html(data);--}}
+                    {{--    $('#result').show();--}}
+                    {{--})--}}
+                    console.log('no')
+                }
+            });
         });
 
-        $('#search').keyup(function(){
-            var search = $('#search').val();
-            if(search==""){
-                // $("#memList").html("");
-                // $('#result').hide();
-                console.log('có')
-            }
-            else{
-                {{--$.get("{{ route('search') }}",{search:search}, function(data){--}}
-                {{--    $('#memList').empty().html(data);--}}
-                {{--    $('#result').show();--}}
-                {{--})--}}
-                console.log('no')
-            }
-        });
-    });
-
-</script>
+    </script>
 @endsection

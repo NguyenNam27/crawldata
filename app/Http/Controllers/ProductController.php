@@ -25,11 +25,9 @@ class ProductController extends Controller
     public function search(Request $request){
         $search = $request->input('search');
         $search_product=Product::Where('name', 'like', '%' . $search . '%')
-            ->orWhere(['price','link_product'], 'like', '%' . $search . '%')
+//            ->orWhere(['price','link_product'], 'like', '%' . $search . '%')
             ->get();
-
         dd($search_product);
-
         return view('product.list',[
             'search_product'=>$search_product
         ]);
@@ -37,16 +35,15 @@ class ProductController extends Controller
     public function viewproduct($id){
 
         $product = Product::find($id);
+//        dd($product);
 
         return view('product.list')->with('product', $product);
     }
     public function find(Request $request){
         $search = $request->input('search');
         $search_product=Product::Where('name', 'like', '%' . $search . '%')
-            ->orWhere(['price','link_product'],'like','%' . $search . '%')
             ->get();
-
-        return view('product.list',[
+        return view('resultsearch.search',[
             'search_product'=>$search_product
         ]);
     }

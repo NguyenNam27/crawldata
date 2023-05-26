@@ -5,14 +5,14 @@ namespace App\Console\Commands;
 use App\Scraper\TGDD;
 use Illuminate\Console\Command;
 
-class ScraperPoongsan extends Command
+class ScraperDMX extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'scrape:poongsan';
+    protected $signature = 'scraper:dmx';
 
     /**
      * The console command description.
@@ -39,6 +39,6 @@ class ScraperPoongsan extends Command
     public function handle()
     {
         $bot = new TGDD();
-        $bot->scrapePoongsan();
+        $bot->scrapeDMX();
     }
 }

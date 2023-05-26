@@ -72,7 +72,13 @@ class TGDD
 //    }
     public function scrapeJunger(){
         $client = new Client();
-        $url = 'https://junger.vn/bep?p=2';
+        $array = array( 'bep','may-rua-bat','may-hut-mui','lo-vi-song-cao-cap-junger-tk-90-345','dung-cu-nha-bep');
+        foreach ($array as $arr) {
+            $url = 'https://junger.vn/'.$arr;
+        }
+        echo '<pre>';
+        print_r($arr);
+        echo '<pre>';
         $category = new Category;
         $category->url = $url;
         $category->save();
@@ -179,6 +185,35 @@ class TGDD
                 $product->category_id=$url;
                 $product->link_product = $link;
 
+                $product->save();
+            });
+    }
+        public function scrapeDMX(){
+        $client = new Client();
+        $url = 'https://www.dienmayxanh.com/search?key=junger#c=0&kw=junger&pi=0';
+        $category = new Category;
+        $category->url = $url;
+        $category->save();
+        $crawler = $client->request('GET', $url);
+
+        $crawler->filter('.product_content')->each(
+            function (Crawler $node) {
+                $url = 'https://bossmassage.vn';
+
+                $name = $node->filter('a h3.product_name')->text();
+
+                $price = $node->filter('.current_price')->text();
+
+                $link_product = $node->filter('a')->attr('href');
+
+                $link = $url.$link_product;
+                $price2 = preg_replace('/\D/', '', $price);
+
+                $product = new Product;
+                $product->name = $name;
+                $product->price = $price2;
+                $product->category_id=$url;
+                $product->link_product = $link;
                 $product->save();
             });
     }
