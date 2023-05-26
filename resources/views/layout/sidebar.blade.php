@@ -20,7 +20,7 @@
           </a>
         </li>
           <li class="active">
-              <a href="{{route('product.index')}}">
+              <a href="{{route('list')}}">
                   <i class="fa fa-list"></i> <span>QUẢN LÝ SẢN PHẨM</span>
               </a>
           </li>

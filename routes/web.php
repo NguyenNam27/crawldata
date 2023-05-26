@@ -18,5 +18,7 @@ use App\Http\Controllers\ProductController;
 
 Route::get('scraper',[ProductTestController::class,'scraper']);
 Route::resource('category', CategoryController::class);
-Route::resource('product', ProductController::class);
+Route::get('product', [ProductController::class,'getList'])->name('list');
 Route::get('search',[ProductController::class,'search'])->name('search');
+Route::get('/product/{id}',[ProductController::class,'viewproduct'])->name('viewproduct');
+Route::post('find',[ProductController::class,'find'])->name('find');

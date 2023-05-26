@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,7 +13,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function getList()
     {
         $product = DB::table('products')->paginate(20);
         return view('product.list',[
@@ -20,72 +21,33 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function search(Request $request){
+        $search = $request->input('search');
+        $search_product=Product::Where('name', 'like', '%' . $search . '%')
+            ->orWhere(['price','link_product'], 'like', '%' . $search . '%')
+            ->get();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        dd($search_product);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return view('product.list',[
+            'search_product'=>$search_product
+        ]);
     }
+    public function viewproduct($id){
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        $product = Product::find($id);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('product.list')->with('product', $product);
     }
-    public function search(){
-        return view('product.list');
+    public function find(Request $request){
+        $search = $request->input('search');
+        $search_product=Product::Where('name', 'like', '%' . $search . '%')
+            ->orWhere(['price','link_product'],'like','%' . $search . '%')
+            ->get();
+
+        return view('product.list',[
+            'search_product'=>$search_product
+        ]);
     }
 }

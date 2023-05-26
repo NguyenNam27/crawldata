@@ -29,6 +29,8 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
@@ -78,8 +80,9 @@
 
     <script src="js/jquery.form-validator.min.js"></script>
     <script type="text/javascript">
-        $.validate({});
+
     </script>
+
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 @yield('my_js')
