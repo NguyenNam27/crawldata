@@ -71,15 +71,21 @@ class CrawlCommands extends Command
             function (Crawler $node) {
                 $url = 'https://mediamart.vn';
                 $name = $node->filter('p.product-name')->text();
-
+                //$checkproduct = find database by $name crawl
+                // true
+                //$priceOld = $checkproduct->price;
                 $price = $node->filter('.product-price-regular')->text();
+                // if ($priceOld < $price) => giá thay đổi. giá mới lớn hơn giá cũ là $checkproduct giá mới là $priceOld
+                // else if ($priceOld > $price) => gía thay đổi, giá mới nhỏ hơn  giá cũ là $checkproduct giá mới là $priceOld
+                // else => //
+
+                //false
 
                 $price2 = preg_replace('/\D/', '', $price);
 
                 $link_product = $node->filter('.product-item')->attr('href');
 
                 $link = $url.$link_product;
-
                 $product = new Product;
                 $product->name = $name;
                 $product->price = $price2;

@@ -41,8 +41,9 @@ class ProductController extends Controller
     }
     public function find(Request $request){
         $search = $request->input('search');
-        $search_product=Product::Where('name', 'like', '%' . $search . '%')
-            ->get();
+        //SELECT * FROM `products` WHERE `name` LIKE '%MUP-104%' AND `category_id` = 'https://poongsankorea.vn' ORDER BY `products`.`created_at` DESC;
+        $search_product=Product::Where('name', 'like', '%' . $search . '%' )->get();
+
         return view('resultsearch.search',[
             'search_product'=>$search_product
         ]);
