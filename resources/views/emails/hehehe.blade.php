@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Đổi giá rồi kìa</title>
+    <title>Sản phẩm khác giá</title>
 </head>
 <body>
 <h1>{{ $details['title'] }}</h1>

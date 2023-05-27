@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TestController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,4 +14,4 @@ use App\Http\Controllers\ProductController;
 */
 
 
-Route::get('scraper',[ProductController::class,'scraper']);
+Route::get('scraper',[TestController::class,'scraper']);
