@@ -46,11 +46,8 @@ class TGDD
         $category = new Category;
         $category->url = $url;
         $category->save();
-
         $crawler = $client->request('GET', $url);
-
         $listItems = $crawler->filter('.product-list .card');
-
         if(count($listItems) > 0){
             $listItems->each(
                 function (Crawler $node) {
@@ -58,13 +55,22 @@ class TGDD
                     $name = $node->filter('p.product-name')->text();
 
                     $price = $node->filter('p.product-price')->text();
-
                     $price2 = preg_replace('/\D/', '', $price);
-
                     $link_product = $node->filter('a.product-item')->attr('href');
-
                     $link = $url . $link_product;
 
+                    $checkproduct = Product::where('name','like','%'.$name.'%')
+                        ->first();
+                    $priceold = $checkproduct->price2;
+//                    if ($priceold < $price2){
+//                        echo 'giá thay đổi,sản phẩm ' .$link. ' giá là: '.$priceold .'giá sản pham BTP là :' .$checkproduct.PHP_EOL;
+//                    } else if ( $priceold > $price2){
+//                        echo 'giá thay đổi,sản phẩm';
+//                    } else {
+//                        echo 'giá mới bằng giá cũ';
+//                    }
+//                    print_r($priceold,'-');
+//                    die();
                 $product = new Product;
                 $product->name = $name;
                 $product->price = $price2;
@@ -73,9 +79,7 @@ class TGDD
                 $product->save();
                 });
         }
-
     }
-
     public function scrapeJunger()
     {
         $client = new Client();
