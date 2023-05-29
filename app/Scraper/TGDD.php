@@ -10,34 +10,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class TGDD
 {
-//    public function scrape()
-//    {
-//        $url = 'https://www.thegioididong.com/';
-//        $category = new Category;
-//        $category->url = $url;
-//        $category->save();
-//
-//        $client = new Client();
-//        $crawler = $client->request('GET', $url);
-//        $crawler->filter('ul.listproduct li.item')->each(
-//            function (Crawler $node) {
-//                $url = 'https://www.thegioididong.com';
-//                $name = $node->filter('h3')->text();
-//                $price = $node->filter('.price')->text();
-//                preg_match('/([0-9\.,]+)\s?\w+/', $price, $m);
-//                $price2 = $m[0];
-//                $price3 = preg_replace('/\D/', '', $price2);
-//                $link_product = $node->filter('.main-contain')->attr('href');
-//                $link = $url.$link_product;
-//                $product = new Product;
-//                $product->name = $name;
-//                $product->price = $price3;
-//                $product->category_id= $url;
-//                $product->link_product = $link;
-//                $product->save();
-//            });
-//
-//    }
+
 
     public function scrapeMediaMart()
     {
@@ -55,13 +28,15 @@ class TGDD
                     $name = $node->filter('p.product-name')->text();
 
                     $price = $node->filter('p.product-price')->text();
-                    $price2 = preg_replace('/\D/', '', $price);
+                    preg_match('/([0-9\.,]+)\s?\w+/', $price, $m);
+                    $price2 = $m[0];
+                    $price3 = preg_replace('/\D/', '', $price2);
                     $link_product = $node->filter('a.product-item')->attr('href');
                     $link = $url . $link_product;
 
-                    $checkproduct = Product::where('name','like','%'.$name.'%')
-                        ->first();
-                    $priceold = $checkproduct->price2;
+//                    $checkproduct = Product::where('name','like','%'.$name.'%')
+//                        ->first();
+//                    $priceold = $checkproduct->price2;
 //                    if ($priceold < $price2){
 //                        echo 'giá thay đổi,sản phẩm ' .$link. ' giá là: '.$priceold .'giá sản pham BTP là :' .$checkproduct.PHP_EOL;
 //                    } else if ( $priceold > $price2){
@@ -73,7 +48,7 @@ class TGDD
 //                    die();
                 $product = new Product;
                 $product->name = $name;
-                $product->price = $price2;
+                $product->price = $price3;
                 $product->category_id = $url;
                 $product->link_product = $link;
                 $product->save();
@@ -223,32 +198,33 @@ class TGDD
 
     public function scrapeDMX()
     {
-//        $client = new Client();
-//        $url = 'https://www.dienmayxanh.com/search?key=junger#c=0&kw=junger&pi=0';
-//        $category = new Category;
-//        $category->url = $url;
-//        $category->save();
-//        $crawler = $client->request('GET', $url);
-//
-//        $crawler->filter('.product_content')->each(
-//            function (Crawler $node) {
-//                $url = 'https://bossmassage.vn';
-//
-//                $name = $node->filter('a h3.product_name')->text();
-//
-//                $price = $node->filter('.current_price')->text();
-//
-//                $link_product = $node->filter('a')->attr('href');
-//
-//                $link = $url . $link_product;
-//                $price2 = preg_replace('/\D/', '', $price);
-//
-//                $product = new Product;
-//                $product->name = $name;
-//                $product->price = $price2;
-//                $product->category_id = $url;
-//                $product->link_product = $link;
-//                $product->save();
-//            });
+        $client = new Client();
+        $url = 'https://www.dienmayxanh.com/search?key=junger';
+        $category = new Category;
+        $category->url = $url;
+        $category->save();
+        $crawler = $client->request('GET', $url);
+
+        $crawler->filter('ul.listproduct')->each(
+            function (Crawler $node) {
+                $url = 'https://www.dienmayxanh.com';
+
+                $name = $node->filter('a h3')->text();
+
+                $price = $node->filter('.price')->text();
+
+                $link_product = $node->filter('a.main-contain')->attr('href');
+
+                $link = $url . $link_product;
+
+                $price2 = preg_replace('/\D/', '', $price);
+
+                $product = new Product;
+                $product->name = $name;
+                $product->price = $price2;
+                $product->category_id = $url;
+                $product->link_product = $link;
+                $product->save();
+            });
     }
 }

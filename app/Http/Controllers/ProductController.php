@@ -15,7 +15,8 @@ class ProductController extends Controller
      */
     public function getList()
     {
-        $product = DB::table('products')->paginate(20);
+        $product = DB::table('products')->distinct()->paginate(20);
+//        dd($product);
         return view('product.list',[
             'product'=>$product
         ]);

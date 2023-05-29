@@ -10,52 +10,35 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class ProductTestController extends Controller
 {
-    public function scraper(){
+    public function scraper()
+    {
         $client = new Client();
         $url = 'https://www.dienmayxanh.com/search?key=junger';
         $category = new Category;
         $category->url = $url;
         $category->save();
         $crawler = $client->request('GET', $url);
-        $listItems = $crawler->filter('li.item');
-        if(count($listItems) > 0) {
+        $listItems = $crawler->filter('ul.listproduct li.item');
+        if (count($listItems) > 0) {
             $listItems->each(
                 function (Crawler $node) {
                     $url = 'https://www.dienmayxanh.com';
-                    $name = $node->filter('h3')->text();
+                    $name = $node->filter('a h3')->text();
                     echo '<pre>';
                     print_r($name);
                     echo '<pre>';
                     $price = $node->filter('.price')->text();
+//                    preg_match('/([0-9\.,]+)\s?\w+/', $price, $m);
+//                    $price2 = $m[0];
+                    $price3 = preg_replace('/\D/', '', $price);
                     echo '<pre>';
-                    print_r($price);
+                    print_r($price3);
                     echo '<pre>';
                     $link_product = $node->filter('a.main-contain')->attr('href');
                     echo '<pre>';
                     print_r($link_product);
                     echo '<pre>';
-
-//                    $link = $url.$link_product;
-//                    $price2 = preg_replace('/\D/', '', $price);
-        //        $category = new Category;
-        //        $category->url = $url;
-        //        $category->save();
-        //        $crawler = $client->request('GET', $url);
-        //        $crawler->filter('.item-wrapper')->each(
-        //            function (Crawler $node) {
-        //                $url = 'https://junger.vn/bep';
-        //                $name = $node->filter('.item-name')->text();
-        //                $price = $node->filter('.price_box')->text();
-        //                $price2 = preg_replace('/\D/', '', $price);
-        //                $link_product = $node->filter('.primary-img')->attr('href');
-        //                $link = $url.$link_product;
-        //                $product = new Product;
-        //                $product->name = $name;
-        //                $product->price = $price2;
-        //                $product->category_id=$url;
-        //                $product->link_product = $link;
-        //                $product->save();
-                        });
+                });
         }
 
     }
