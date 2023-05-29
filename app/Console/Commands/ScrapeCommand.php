@@ -85,7 +85,7 @@ class ScrapeCommand extends Command
         $crawler->filter('ul.listproduct li.item')->each(
             function (Crawler $node) use ($data) {
                 $url = 'https://www.dienmayxanh.com';
-                $name = $node->filter('h3')->text();
+                $name = $node->filter('a h3')->text();
                 $price = $node->filter('.price')->text();
                 $link_product = $node->filter('a.main-contain')->attr('href');
                 $link = $url . $link_product;
