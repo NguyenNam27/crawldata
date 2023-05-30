@@ -58,7 +58,7 @@
                                             <td>{{ $product['original_price'] }}</td>
                                             <td> {{ $product['created_at'] }}</td>
                                             @php
-                                                $expect_site = null
+                                                $expect_sites = []
                                             @endphp
 
                                             @for($i = 0; $i < $count_site; $i++)
@@ -69,15 +69,13 @@
                                                         <p>Giá chênh lệch: {{ $product['items'][$i]['price_diff'] }}</p>
                                                     </td>
                                                     @php
-                                                        $expect_site = $product['items'][$i]['category_id']
+                                                        $expect_sites[] = $product['items'][$i]['category_id']
                                                     @endphp
-
-                                                    @break
                                                 @endif
                                             @endfor
 
                                             @foreach($sites as $site)
-                                                @if($expect_site !== $site)
+                                                @if(!in_array($site, $expect_sites))
                                                     <td><a href="{{ $site }}"> {{ $site }} </a></td>
                                                 @endif
                                             @endforeach
