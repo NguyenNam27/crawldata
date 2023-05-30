@@ -20,7 +20,7 @@
                         <div class="box-header with-border">
                             {{--                            <h3 class="box-title">Danh Sách Sản Phẩm</h3>--}}
                             <div class="col-sm-3 col-md-3">
-                                <form action="{{route('find')}}" method="POST" class="navbar-form" name="search">
+                                <form action="{{route('list')}}" method="GET" class="navbar-form" name="search">
                                     @csrf
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Search Product"
@@ -44,38 +44,46 @@
                             <table class="table table-border">
                                 <tr>
                                     <th style="width:10px">STT</th>
-                                    <th>Code product </th>
                                     <th>Name </th>
                                     <th>Price Cost</th>
-                                    <th>Price partner </th>
-                                    <th>Result </th>
-                                    <th>Category</th>
-                                    <th>Status</th>
                                     <th>Created_at</th>
-                                    <th>Thao Tác</th>
+                                    @for($i = 0; $i < $count_site; $i++)
+                                        <th> Other site</th>
+                                    @endfor
                                 </tr>
-                                @foreach($product as $key => $item)
-                                    <tr class="item-{{ $item->id }}">
-                                        <td>{{ $key+1 }}</td>
-                                        <td>1</td>
-                                        <td>{{ $item->name }}</td>
-                                        <td>{{ $item->price_cost }}</td>
-                                        <td>{{$item->price_partner}}</td>
-                                        <td>{{$item->result}}</td>
-                                        <td><a href="{{ $item->category_id }}"> {{ $item->category_id }} </a></td>
-                                        <td> {{ ($item->status == 1) ? 'Chưa so sánh' : 'Đã so sánh' }} </td>
-                                        <td> {{ $item->created_at }}</td>
-                                        <td>
-                                            <a href=""
-                                               class="btn btn-warning btn-edit"><i class="fa fa-pencil"></i></a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                    </tbody>
+                                    @foreach($products as $key => $product)
+                                        <tr>
+                                            <td>{{ $key+1 }}</td>
+                                            <td>{{ $product['name'] }}</td>
+                                            <td>{{ $product['original_price'] }}</td>
+                                            <td> {{ $product['created_at'] }}</td>
+                                            @php
+                                                $expect_site = null
+                                            @endphp
+
+                                            @for($i = 0; $i < $count_site; $i++)
+                                                @if(isset($product['items'][$i]))
+                                                    <td>
+                                                        <a href="{{ $product['items'][$i]['category_id'] }}"> {{ $product['items'][$i]['category_id'] }} </a>
+                                                        <p>Giá gốc: {{ $product['items'][$i]['price'] }}</p>
+                                                        <p>Giá chênh lệch: {{ $product['items'][$i]['price_diff'] }}</p>
+                                                    </td>
+                                                    @php
+                                                        $expect_site = $product['items'][$i]['category_id']
+                                                    @endphp
+
+                                                    @break
+                                                @endif
+                                            @endfor
+
+                                            @foreach($sites as $site)
+                                                @if($expect_site !== $site)
+                                                    <td><a href="{{ $site }}"> {{ $site }} </a></td>
+                                                @endif
+                                            @endforeach
+                                            </tr>
+                                        @endforeach
                             </table>
-                            <div class="box-footer clearfix">
-                                {{ $product->links() }}
-                            </div>
                         </div>
                     </div>
                 </div>

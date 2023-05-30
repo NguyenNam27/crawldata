@@ -19,9 +19,6 @@ class CreateProductsTable extends Migration
             $table->string('name')->index()->nullable();
             $table->string('category_id')->nullable();
             $table->string('price_cost')->nullable();
-            $table->string('price_partner')->nullable();
-            $table->string('result')->nullable();
-            $table->string('status')->default(1);
             $table->string('link_product')->nullable();
             $table->timestamps();
 //            $table->foreign('category_id')->references('id')->on('categories')->constrained();
