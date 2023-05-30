@@ -24,6 +24,7 @@ class ProductTestController extends Controller
                 function (Crawler $node) {
                     $url = 'https://www.dienmayxanh.com';
                     $name = $node->filter('a h3')->text();
+
                     echo '<pre>';
                     print_r($name);
                     echo '<pre>';
@@ -35,6 +36,7 @@ class ProductTestController extends Controller
                     print_r($price3);
                     echo '<pre>';
                     $link_product = $node->filter('a.main-contain')->attr('href');
+
                     echo '<pre>';
                     print_r($link_product);
                     echo '<pre>';

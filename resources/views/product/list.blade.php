@@ -44,24 +44,30 @@
                             <table class="table table-border">
                                 <tr>
                                     <th style="width:10px">STT</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>link_product</th>
+                                    <th>Code product </th>
+                                    <th>Name </th>
+                                    <th>Price Cost</th>
+                                    <th>Price partner </th>
+                                    <th>Result </th>
                                     <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Created_at</th>
                                     <th>Thao Tác</th>
                                 </tr>
                                 @foreach($product as $key => $item)
                                     <tr class="item-{{ $item->id }}">
                                         <td>{{ $key+1 }}</td>
+                                        <td>1</td>
                                         <td>{{ $item->name }}</td>
-                                        <td>{{ $item->price }}</td>
-                                        <td><a href="{{ $item->link_product }}"> {{ $item->link_product }} </a></td>
+                                        <td>{{ $item->price_cost }}</td>
+                                        <td>{{$item->price_partner}}</td>
+                                        <td>{{$item->result}}</td>
                                         <td><a href="{{ $item->category_id }}"> {{ $item->category_id }} </a></td>
+                                        <td> {{ ($item->status == 1) ? 'Chưa so sánh' : 'Đã so sánh' }} </td>
+                                        <td> {{ $item->created_at }}</td>
                                         <td>
                                             <a href=""
                                                class="btn btn-warning btn-edit"><i class="fa fa-pencil"></i></a>
-                                            <button class="btn btn-danger btn-delete">
-                                                <i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                                     @endforeach

@@ -15,7 +15,9 @@ class ProductController extends Controller
      */
     public function getList()
     {
-        $product = DB::table('products')->distinct()->paginate(20);
+        $product = DB::table('products')
+            ->orderBy('created_at','ASC')
+            ->paginate(20);
 //        dd($product);
         return view('product.list',[
             'product'=>$product
@@ -26,9 +28,7 @@ class ProductController extends Controller
     public function search(Request $request){
         $search = $request->input('search');
         $search_product=Product::Where('name', 'like', '%' . $search . '%')
-//            ->orWhere(['price','link_product'], 'like', '%' . $search . '%')
             ->get();
-        dd($search_product);
         return view('product.list',[
             'search_product'=>$search_product
         ]);
@@ -36,17 +36,18 @@ class ProductController extends Controller
     public function viewproduct($id){
 
         $product = Product::find($id);
-//        dd($product);
 
         return view('product.list')->with('product', $product);
     }
     public function find(Request $request){
         $search = $request->input('search');
         //SELECT * FROM `products` WHERE `name` LIKE '%MUP-104%' AND `category_id` = 'https://poongsankorea.vn' ORDER BY `products`.`created_at` DESC;
-        $search_product=Product::Where('name', 'like', '%' . $search . '%' )->get();
+        $search_product = Product::Where('name', 'like', '%' . $search . '%' )
+            ->get();
 
         return view('resultsearch.search',[
-            'search_product'=>$search_product
+            'search_product'=>$search_product,
+//            'seclect_product'=>$select_product
         ]);
     }
 }

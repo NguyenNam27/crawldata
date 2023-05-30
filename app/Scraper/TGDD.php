@@ -26,7 +26,6 @@ class TGDD
                 function (Crawler $node) {
                     $url = 'https://mediamart.vn';
                     $name = $node->filter('p.product-name')->text();
-
                     $price = $node->filter('p.product-price')->text();
                     preg_match('/([0-9\.,]+)\s?\w+/', $price, $m);
                     $price2 = $m[0];
@@ -80,7 +79,7 @@ class TGDD
                         $link = $url . $link_product;
                         $product = new Product;
                         $product->name = $name;
-                        $product->price = $price2;
+                        $product->price_cost = $price2;
                         $product->category_id = $url;
                         $product->link_product = $link;
                         $product->save();
@@ -152,7 +151,6 @@ class TGDD
                         $product->price = $price2;
                         $product->category_id = $url;
                         $product->link_product = $link;
-
                         $product->save();
                     });
                 print_r($arrHWK.' - page'.$page . ' item: '.count($checkpagination).', Total Item = '.$totalItem);
@@ -205,7 +203,7 @@ class TGDD
         $category->save();
         $crawler = $client->request('GET', $url);
 
-        $crawler->filter('ul.listproduct')->each(
+        $crawler->filter('ul.listproduct li.item')->each(
             function (Crawler $node) {
                 $url = 'https://www.dienmayxanh.com';
 
@@ -217,11 +215,11 @@ class TGDD
 
                 $link = $url . $link_product;
 
-                $price2 = preg_replace('/\D/', '', $price);
+                $price_partner = preg_replace('/\D/', '', $price);
 
                 $product = new Product;
                 $product->name = $name;
-                $product->price = $price2;
+                $product->price_partner = $price_partner;
                 $product->category_id = $url;
                 $product->link_product = $link;
                 $product->save();
