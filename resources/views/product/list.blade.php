@@ -44,7 +44,6 @@
                             <table class="table table-border">
                                 <tr>
                                     <th style="width:10px">STT</th>
-                                    <th>Type Product</th>
                                     <th>Code Product</th>
                                     <th>Name</th>
                                     <th>Price Cost</th>
@@ -57,23 +56,22 @@
                                     <tr>
                                         <td>{{ $key+1 }}</td>
 
+                                        <td>{{ $product['code_product'] }}</td>
                                         <td>
-                                            Loại SP
+                                            <a href="{{ $product['link_product'] }}"> {{ $product['name'] }} </a>
                                         </td>
-                                        <td>codesanpham</td>
-                                        <td>{{ $product['name'] }}</td>
                                         <td>{{ number_format($product['original_price']) }}đ</td>
 
                                         <td> {{ $product['created_at'] }}</td>
                                         @php
-
                                             $expect_sites = []
                                         @endphp
+
                                         @for($i = 0; $i < $count_site; $i++)
                                             @if(isset($product['items'][$i]))
 
                                                 <td>
-                                                    <a href="{{ $product['items'][$i]['category_id'] }}"> {{ $product['items'][$i]['category_id'] }} </a>
+                                                    <a href="{{ $product['items'][$i]['link_product'] }}"> {{ $product['items'][$i]['category_id'] }} </a>
                                                     <p>Giá gốc: {{ number_format($product['items'][$i]['price']) }}đ</p>
                                                     <p>Giá chênh
                                                         lệch: {{ number_format($product['items'][$i]['price_diff']) }}</p>
@@ -87,7 +85,11 @@
                                         @foreach($sites as $site)
                                             {{--                                            @if($expect_site !== $site)--}}
                                             @if(!in_array($site, $expect_sites))
-                                                <td><a href="{{ $site }}"> {{ $site }} </a></td>
+                                                <td>
+                                                    <a href="{{ $site }}"> {{ $site }} </a>
+                                                    <p>Giá gốc: Không tồn tại</p>
+                                                    <p>Giá chênh lệch: không tồn tại </p>
+                                                </td>
                                             @endif
                                             {{--                                            @endif--}}
                                         @endforeach

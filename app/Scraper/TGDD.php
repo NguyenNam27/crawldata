@@ -40,7 +40,7 @@ class TGDD
                         function (Crawler $node) use ($mediaMartUrl, $existData, &$newProducts) {
                             $mediaMartUrl = 'https://mediamart.vn';
                             $name = $node->filter('p.product-name')->text();
-                            preg_match_all('/([A-Z]{3}-\d{3}-[A-Z]*\d*)/',$name , $code);;
+                            preg_match_all('/([\w\d]+)-.*/',$name , $code);;
                             $code_product1 = $code[0];
                             $code_product = implode(" ",$code_product1);
                             $price = $node->filter('p.product-price')->text();
@@ -104,7 +104,7 @@ class TGDD
                         function (Crawler $node) use ($jungerUrl, &$existData) {
                             $jungerUrl = 'https://junger.vn';
                             $name = $node->filter('.item-name')->text();
-                            preg_match_all('/([A-Z]{3}-\d{3}-[A-Z]*\d*)/',$name , $code);;
+                            preg_match_all('/([\w\d]+)-.*/',$name , $code);;
                             $code_product1 = $code[0];
                             $code_product = implode(" ",$code_product1);
                             $price = $node->filter('.price_box')->text();
@@ -117,7 +117,7 @@ class TGDD
                                 $product = new Product;
                                 $product->code_product = $code_product;
                                 $product->name = $name;
-                                $product->price_cost = $price2;
+                                $product->price_cost = empty($price2) ? 0 : $price2;
                                 $product->category_id = $jungerUrl;
                                 $product->link_product = $link;
                                 $product->save();
@@ -151,7 +151,7 @@ class TGDD
         $crawler->filter('.product_content')->each(
             function (Crawler $node) use ($poongSanUrl, $existData) {
                 $name = $node->filter('p.product_name')->text();
-                preg_match_all('/(\b[A-Z]{3}-\d{3}\b)/',$name , $code);;
+                preg_match_all('/([\w\d]+)-.*/',$name , $code);;
                 $code_product1 = $code[0];
                 $code_product = implode(" ",$code_product1);
                 $price = $node->filter('.current_price')->text();
@@ -166,7 +166,7 @@ class TGDD
                     $product = new Product;
                     $product->code_product = $code_product;
                     $product->name = $name;
-                    $product->price_cost = $price2;
+                    $product->price_cost = empty($price2) ? 0 : $price2;
                     $product->category_id = $poongSanUrl;
                     $product->link_product = $link;
                     $product->save();
@@ -204,9 +204,9 @@ class TGDD
                         $url = 'https://hawonkoo.vn';
 
                         $name = $node->filter('a h3.product_name')->text();
-                        preg_match_all('/([A-Z]{3}-\d{3}-[A-Z]*\d*)/',$name , $code);;
+                        preg_match_all('/([\w\d]+)-.*/',$name , $code);
                         $code_product1 = $code[0];
-                        $code_product = implode(" ",$code_product1) ;
+                        $code_product = implode(" ",$code_product1);
                         $price = $node->filter('.current_price')->text();
                         $link_product = $node->filter('a')->attr('href');
                         $link = $url . $link_product;
@@ -217,7 +217,7 @@ class TGDD
                             $product = new Product;
                             $product->code_product = $code_product;
                             $product->name = $name;
-                            $product->price_cost = $price2;
+                            $product->price_cost = empty($price2) ? 0 : $price2;
                             $product->category_id = $url;
                             $product->link_product = $link;
                             $product->save();
@@ -255,7 +255,7 @@ class TGDD
                     function (Crawler $node) use ($existData) {
                         $url = 'https://bossmassage.vn';
                         $name = $node->filter('h3.product_name a')->text();
-                        preg_match_all('/(\b[A-Z]{3}-\d{3}\b)/',$name , $code);;
+                        preg_match_all('/([\w\d]+)-.*/',$name , $code);;
                         $code_product1 = $code[0];
                         $code_product = implode(" ",$code_product1);
                         $price = $node->filter('.current_price')->text();
@@ -268,7 +268,7 @@ class TGDD
                             $product = new Product;
                             $product->code_product = $code_product;
                             $product->name = $name;
-                            $product->price_cost = $price2;
+                            $product->price_cost = empty($price2) ? 0 : $price2;
                             $product->category_id = $url;
                             $product->link_product = $link;
                             $product->save();
@@ -302,7 +302,7 @@ class TGDD
                 $url = 'https://www.dienmayxanh.com';
 
                 $name = $node->filter('a h3')->text();
-                preg_match_all('/([A-Z]{3}-\d{3}-[A-Z]*\d*)/',$name , $code);;
+                preg_match_all('/([\w\d]+)-.*/',$name , $code);;
                 $code_product1 = $code[0];
                 $code_product = implode(" ",$code_product1);
                 $price = $node->filter('.price')->text();
@@ -318,7 +318,7 @@ class TGDD
                     $product = new Product;
                     $product->code_product = $code_product;
                     $product->name = $name;
-                    $product->price_cost = $price_partner;
+                    $product->price_cost = empty($price_partner) ? 0 : $price_partner;
                     $product->category_id = $url;
                     $product->link_product = $link;
                     $product->save();
