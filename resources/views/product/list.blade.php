@@ -20,7 +20,7 @@
                         <div class="box-header with-border">
                             {{--                            <h3 class="box-title">Danh Sách Sản Phẩm</h3>--}}
                             <div class="col-sm-3 col-md-3">
-                                <form action="{{route('list')}}" method="GET" class="navbar-form" name="search">
+                                <form action="{{route('home')}}" method="GET" class="navbar-form" name="search">
                                     @csrf
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Search Product"
@@ -44,44 +44,62 @@
                             <table class="table table-border">
                                 <tr>
                                     <th style="width:10px">STT</th>
-                                    <th>Name </th>
+                                    <th>Type Product</th>
+                                    <th>Code Product</th>
+                                    <th>Name</th>
                                     <th>Price Cost</th>
                                     <th>Created_at</th>
                                     @for($i = 0; $i < $count_site; $i++)
                                         <th> Other site</th>
                                     @endfor
                                 </tr>
-                                    @foreach($products as $key => $product)
-                                        <tr>
-                                            <td>{{ $key+1 }}</td>
-                                            <td>{{ $product['name'] }}</td>
-                                            <td>{{ $product['original_price'] }}</td>
-                                            <td> {{ $product['created_at'] }}</td>
-                                            @php
-                                                $expect_sites = []
-                                            @endphp
+                                @foreach($products as $key => $product)
+                                    <tr>
+                                        <td>{{ $key+1 }}</td>
 
-                                            @for($i = 0; $i < $count_site; $i++)
-                                                @if(isset($product['items'][$i]))
-                                                    <td>
-                                                        <a href="{{ $product['items'][$i]['category_id'] }}"> {{ $product['items'][$i]['category_id'] }} </a>
-                                                        <p>Giá gốc: {{ $product['items'][$i]['price'] }}</p>
-                                                        <p>Giá chênh lệch: {{ $product['items'][$i]['price_diff'] }}</p>
-                                                    </td>
-                                                    @php
-                                                        $expect_sites[] = $product['items'][$i]['category_id']
-                                                    @endphp
-                                                @endif
-                                            @endfor
+                                        <td>
+                                            Loại SP
+                                        </td>
+                                        <td>codesanpham</td>
+                                        <td>{{ $product['name'] }}</td>
+                                        <td>{{ number_format($product['original_price']) }}đ</td>
 
-                                            @foreach($sites as $site)
-                                                @if(!in_array($site, $expect_sites))
-                                                    <td><a href="{{ $site }}"> {{ $site }} </a></td>
-                                                @endif
-                                            @endforeach
-                                            </tr>
+                                        <td> {{ $product['created_at'] }}</td>
+                                        @php
+
+                                            $expect_sites = []
+                                        @endphp
+                                        @for($i = 0; $i < $count_site; $i++)
+                                            @if(isset($product['items'][$i]))
+
+                                                <td>
+                                                    <a href="{{ $product['items'][$i]['category_id'] }}"> {{ $product['items'][$i]['category_id'] }} </a>
+                                                    <p>Giá gốc: {{ number_format($product['items'][$i]['price']) }}đ</p>
+                                                    <p>Giá chênh
+                                                        lệch: {{ number_format($product['items'][$i]['price_diff']) }}</p>
+                                                </td>
+                                                @php
+                                                    $expect_sites[] = $product['items'][$i]['category_id']
+                                                @endphp
+                                            @endif
+                                        @endfor
+
+                                        @foreach($sites as $site)
+                                            {{--                                            @if($expect_site !== $site)--}}
+                                            @if(!in_array($site, $expect_sites))
+                                                <td><a href="{{ $site }}"> {{ $site }} </a></td>
+                                            @endif
+                                            {{--                                            @endif--}}
                                         @endforeach
+                                    </tr>
+                                @endforeach
+
                             </table>
+                            <div class="item-paginate" style="border: 1px">
+                                <a class="pace-item" href="">1</a>
+                                <a class="pace-item" href="">2</a>
+                                <a class="pace-item" href="">3</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -89,30 +107,4 @@
         </section>
     </div>
 @endsection
-@section('my_js')
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
 
-            $('#search').keyup(function () {
-                var search = $('#search').val();
-                if (search == "") {
-                    // $("#memList").html("");
-                    // $('#result').hide();
-                    console.log('có')
-                } else {
-                    {{--$.get("{{ route('search') }}",{search:search}, function(data){--}}
-                    {{--    $('#memList').empty().html(data);--}}
-                    {{--    $('#result').show();--}}
-                    {{--})--}}
-                    console.log('no')
-                }
-            });
-        });
-
-    </script>
-@endsection

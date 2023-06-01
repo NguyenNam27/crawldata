@@ -24,10 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        $product = DB::table('products')->paginate(20);
-        return view('product.list',[
-            'product'=>$product
+        return view('home',[
         ]);
     }
 }

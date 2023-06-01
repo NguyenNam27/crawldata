@@ -40,28 +40,21 @@ class TGDD
                         function (Crawler $node) use ($mediaMartUrl, $existData, &$newProducts) {
                             $mediaMartUrl = 'https://mediamart.vn';
                             $name = $node->filter('p.product-name')->text();
+                            preg_match_all('/([A-Z]{3}-\d{3}-[A-Z]*\d*)/',$name , $code);;
+                            $code_product1 = $code[0];
+                            $code_product = implode(" ",$code_product1);
                             $price = $node->filter('p.product-price')->text();
                             preg_match('/([0-9\.,]+)\s?\w+/', $price, $m);
                             $price2 = $m[0];
                             $price3 = preg_replace('/\D/', '', $price2);
                             $link_product = $node->filter('a.product-item')->attr('href');
                             $link = $mediaMartUrl . $link_product;
-                            //                    $checkproduct = Product::where('name','like','%'.$name.'%')
-                            //                        ->first();
-                            //                    $priceold = $checkproduct->price2;
-                            //                    if ($priceold < $price2){
-                            //                        echo 'giá thay đổi,sản phẩm ' .$link. ' giá là: '.$priceold .'giá sản pham BTP là :' .$checkproduct.PHP_EOL;
-                            //                    } else if ( $priceold > $price2){
-                            //                        echo 'giá thay đổi,sản phẩm';
-                            //                    } else {
-                            //                        echo 'giá mới bằng giá cũ';
-                            //                    }
-                            //                    print_r($priceold,'-');
-                            //                    die();
+
                             $now = Carbon::now()->format('Y-m-d');
                             $productNameByDate = $name . '@@' . $now;
                             if (!in_array($productNameByDate, $existData)) {
                                 $newProducts[] = [
+                                    'code_product'=>$code_product,
                                     'name' => $name,
                                     'price_cost' => $price3,
                                     'category_id' => $mediaMartUrl,
@@ -111,6 +104,9 @@ class TGDD
                         function (Crawler $node) use ($jungerUrl, &$existData) {
                             $jungerUrl = 'https://junger.vn';
                             $name = $node->filter('.item-name')->text();
+                            preg_match_all('/([A-Z]{3}-\d{3}-[A-Z]*\d*)/',$name , $code);;
+                            $code_product1 = $code[0];
+                            $code_product = implode(" ",$code_product1);
                             $price = $node->filter('.price_box')->text();
                             $price2 = preg_replace('/\D/', '', $price);
                             $link_product = $node->filter('.primary-img')->attr('href');
@@ -119,6 +115,7 @@ class TGDD
                             $productByNameAndDate = $name . '@@' . Carbon::now()->format('Y-m-d');
                             if (!in_array($productByNameAndDate, $existData)) {
                                 $product = new Product;
+                                $product->code_product = $code_product;
                                 $product->name = $name;
                                 $product->price_cost = $price2;
                                 $product->category_id = $jungerUrl;
@@ -154,7 +151,9 @@ class TGDD
         $crawler->filter('.product_content')->each(
             function (Crawler $node) use ($poongSanUrl, $existData) {
                 $name = $node->filter('p.product_name')->text();
-
+                preg_match_all('/(\b[A-Z]{3}-\d{3}\b)/',$name , $code);;
+                $code_product1 = $code[0];
+                $code_product = implode(" ",$code_product1);
                 $price = $node->filter('.current_price')->text();
 
                 $link_product = $node->filter('p a')->attr('href');
@@ -165,6 +164,7 @@ class TGDD
                 $productByNameAndDate = $name . '@@' . Carbon::now()->format('Y-m-d');
                 if (!in_array($productByNameAndDate, $existData)) {
                     $product = new Product;
+                    $product->code_product = $code_product;
                     $product->name = $name;
                     $product->price_cost = $price2;
                     $product->category_id = $poongSanUrl;
@@ -202,7 +202,11 @@ class TGDD
                 $checkpagination->each(
                     function (Crawler $node) use (&$existData) {
                         $url = 'https://hawonkoo.vn';
+
                         $name = $node->filter('a h3.product_name')->text();
+                        preg_match_all('/([A-Z]{3}-\d{3}-[A-Z]*\d*)/',$name , $code);;
+                        $code_product1 = $code[0];
+                        $code_product = implode(" ",$code_product1) ;
                         $price = $node->filter('.current_price')->text();
                         $link_product = $node->filter('a')->attr('href');
                         $link = $url . $link_product;
@@ -211,6 +215,7 @@ class TGDD
                         $productByNameAndDate = $name . '@@' . Carbon::now()->format('Y-m-d');
                         if (!in_array($productByNameAndDate, $existData)) {
                             $product = new Product;
+                            $product->code_product = $code_product;
                             $product->name = $name;
                             $product->price_cost = $price2;
                             $product->category_id = $url;
@@ -250,6 +255,9 @@ class TGDD
                     function (Crawler $node) use ($existData) {
                         $url = 'https://bossmassage.vn';
                         $name = $node->filter('h3.product_name a')->text();
+                        preg_match_all('/(\b[A-Z]{3}-\d{3}\b)/',$name , $code);;
+                        $code_product1 = $code[0];
+                        $code_product = implode(" ",$code_product1);
                         $price = $node->filter('.current_price')->text();
                         $link_product = $node->filter('a.primary_img')->attr('href');
                         $link = $url . $link_product;
@@ -258,6 +266,7 @@ class TGDD
                         $productByNameAndDate = $name . '@@' . Carbon::now()->format('Y-m-d');
                         if (!in_array($productByNameAndDate, $existData)) {
                             $product = new Product;
+                            $product->code_product = $code_product;
                             $product->name = $name;
                             $product->price_cost = $price2;
                             $product->category_id = $url;
@@ -293,7 +302,9 @@ class TGDD
                 $url = 'https://www.dienmayxanh.com';
 
                 $name = $node->filter('a h3')->text();
-
+                preg_match_all('/([A-Z]{3}-\d{3}-[A-Z]*\d*)/',$name , $code);;
+                $code_product1 = $code[0];
+                $code_product = implode(" ",$code_product1);
                 $price = $node->filter('.price')->text();
 
                 $link_product = $node->filter('a.main-contain')->attr('href');
@@ -305,6 +316,7 @@ class TGDD
                 $productByNameAndDate = $name . '@@' . Carbon::now()->format('Y-m-d');
                 if (!in_array($productByNameAndDate, $existData)) {
                     $product = new Product;
+                    $product->code_product = $code_product;
                     $product->name = $name;
                     $product->price_cost = $price_partner;
                     $product->category_id = $url;

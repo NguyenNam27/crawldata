@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductTestController;
 use App\Http\Controllers\CategoryController;
@@ -25,5 +26,5 @@ Route::post('find',[ProductController::class,'find'])->name('find');
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //Route::get('/', [ProductController::class, 'getList'])->name('list');
