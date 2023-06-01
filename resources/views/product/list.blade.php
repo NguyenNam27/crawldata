@@ -20,7 +20,7 @@
                         <div class="box-header with-border">
                             {{--                            <h3 class="box-title">Danh Sách Sản Phẩm</h3>--}}
                             <div class="col-sm-3 col-md-3">
-                                <form action="{{route('home')}}" method="GET" class="navbar-form" name="search">
+                                <form action="{{route('list')}}" method="GET" class="navbar-form" name="search">
                                     @csrf
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Search Product"
