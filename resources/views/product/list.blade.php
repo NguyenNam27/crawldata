@@ -33,10 +33,19 @@
                                 </form>
                             </div>
 
-                            <div id="result" class="panel panel-default" style="display:none">
-                                <ul class="list-group" id="memList">
-
-                                </ul>
+                            <div class="col-sm-3 col-md-3">
+                                <form action="" method="GET" class="navbar-form" name="search">
+                                    @csrf
+                                    <div class="input-group">
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                            <option selected>--Chọn site--</option>
+                                            <option value="1">Junger</option>
+                                            <option value="2">Hawonkoo</option>
+                                            <option value="3">PoongsanKorea</option>
+                                            <option value="3">Boss</option>
+                                        </select>
+                                    </div>
+                                </form>
                             </div>
                         </div>
 
