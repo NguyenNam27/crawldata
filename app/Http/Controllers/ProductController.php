@@ -37,7 +37,6 @@ class ProductController extends Controller
         ];
 
         $originalSite = $request->get('original_site', 'https://hawonkoo.vn');
-
         // Site gốc nên giá cần so sánh với nhau, nên k hiển thị
         foreach ($sites as $key => $site) {
             if (in_array($site, $originalSites)) {

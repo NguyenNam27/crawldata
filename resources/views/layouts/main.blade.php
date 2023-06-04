@@ -42,14 +42,14 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-@include('layout.header')
+@include('layouts.header')
 
 
-@include('layout.sidebar')
+@include('layouts.sidebar')
 
 
 @yield('content')
-@include('layout.footer')
+@include('layouts.footer')
 
 
 

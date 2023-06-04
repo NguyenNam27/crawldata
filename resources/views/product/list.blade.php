@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layouts.main')
 @section('content')
     <div class="content-wrapper">
 
@@ -38,7 +38,22 @@
                                     @csrf
                                     <div class="input-group">
                                         <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                            <option selected>--Chọn site--</option>
+                                            <option selected>--Chọn site gốc--</option>
+                                            <option value="1">Junger</option>
+                                            <option value="">Hawonkoo</option>
+                                            <option value="3">PoongsanKorea</option>
+                                            <option value="3">Boss</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="col-sm-3 col-md-3">
+                                <form action="" method="GET" class="navbar-form" name="search">
+                                    @csrf
+                                    <div class="input-group">
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                            <option selected>--Lọc sản phẩm so sánh--</option>
                                             <option value="1">Junger</option>
                                             <option value="2">Hawonkoo</option>
                                             <option value="3">PoongsanKorea</option>
@@ -46,6 +61,10 @@
                                         </select>
                                     </div>
                                 </form>
+                            </div>
+
+                            <div class="col-sm-3 col-md-3">
+                                <a href="{{ route('run-command') }}" class="btn btn-primary">RunCommand</a>
                             </div>
                         </div>
 
@@ -81,7 +100,7 @@
 
                                                 <td>
                                                     <a href="{{ $product['items'][$i]['link_product'] }}"> {{ $product['items'][$i]['category_id'] }} </a>
-                                                    <p>Giá gốc: {{ number_format($product['items'][$i]['price']) }}đ</p>
+                                                    <p>Giá niêm yết: {{ number_format($product['items'][$i]['price']) }}đ</p>
                                                     <p>Giá chênh
                                                         lệch: {{ number_format($product['items'][$i]['price_diff']) }}</p>
                                                 </td>
@@ -96,7 +115,7 @@
                                             @if(!in_array($site, $expect_sites))
                                                 <td>
                                                     <a href="{{ $site }}"> {{ $site }} </a>
-                                                    <p>Giá gốc: Không tồn tại</p>
+                                                    <p>Giá niêm yết: Không tồn tại</p>
                                                     <p>Giá chênh lệch: không tồn tại </p>
                                                 </td>
                                             @endif

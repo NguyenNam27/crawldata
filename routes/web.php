@@ -16,6 +16,7 @@ use App\Http\Controllers\ProductController;
 |
 */
 
+Route::get('/run-command', [ProductTestController::class,'runCommand'])->name('run-command');
 
 Route::get('scraper',[ProductTestController::class,'scraper']);
 Route::resource('category', CategoryController::class);
