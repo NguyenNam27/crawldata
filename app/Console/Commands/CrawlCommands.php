@@ -105,6 +105,59 @@ class CrawlCommands extends Command
             dd($exception);
         }
 
+        try {
+            $client = new Client();
+            $array = array('bep', 'may-rua-bat', 'may-hut-mui', 'lo-vi-song-cao-cap-junger-tk-90-345', 'dung-cu-nha-bep');
+            $jungerUrl = 'https://junger.vn';
+            $existData = Product::selectRaw("CONCAT(name, '@@', DATE_FORMAT(created_at, '%Y-%m-%d')) as unique_product_by_date")
+                ->where('category_id', $jungerUrl)
+                ->get()
+                ->pluck('unique_product_by_date')
+                ->toArray();
+
+            foreach ($array as $arr) {
+                for ($page = 1; $page <= 9999; $page++) {
+                    $url = 'https://junger.vn/' . $arr . '?p=' . $page;
+                    $category = new Category;
+                    $category->url = $url;
+                    $category->save();
+                    $crawler = $client->request('GET', $url);
+                    $checkItems = $crawler->filter('.item-wrapper');
+                    if (count($checkItems) === 0) {
+                        break;
+                    }
+                    $checkItems->each(
+                        function (Crawler $node) use ($jungerUrl, &$existData) {
+                            $jungerUrl = 'https://junger.vn';
+                            $name = $node->filter('.item-name')->text();
+                            preg_match_all('/([\w\d]+)-.*/',$name , $code);;
+                            $code_product1 = $code[0];
+                            $code_product = implode(" ",$code_product1);
+                            $price = $node->filter('.price_box')->text();
+                            $price2 = preg_replace('/\D/', '', $price);
+                            $link_product = $node->filter('.primary-img')->attr('href');
+                            $link = $jungerUrl . $link_product;
+
+                            $productByNameAndDate = $name . '@@' . Carbon::now()->format('Y-m-d');
+                            if (!in_array($productByNameAndDate, $existData)) {
+                                $product = new Product;
+                                $product->code_product = $code_product;
+                                $product->name = $name;
+                                $product->price_cost = empty($price2) ? 0 : $price2;
+                                $product->category_id = $jungerUrl;
+                                $product->link_product = $link;
+                                $product->save();
+                                $existData[] = $productByNameAndDate;
+                            }
+                        });
+                    print_r($arr . ', page: ' . $page . ' \n');
+                }
+
+            }
+        } catch (\Exception $exception) {
+            dd($exception);
+        }
+
         $client = new Client();
         $poongSanUrl = $url = 'https://poongsankorea.vn';
         $category = new Category;

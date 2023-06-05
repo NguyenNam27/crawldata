@@ -43,16 +43,13 @@ class ProductController extends Controller
                 $sites->forget($key);
             }
         }
-
         // Cấu trúc dữ liệu quyết định thuật toán
-
         //Unique: (name, created_at)
+        //for toaàn bộ
         foreach($products->groupBy('name') as $name => $productByName) {
-
             foreach($productByName->groupBy('unique_product_by_date') as $date => $productsByDate) {
                 $originalPrice = 0;
                 $originalProductLink = '';
-
                 // tìm giá gốc và link gốc
                 foreach ($productsByDate as $key => $productByDate) {
                     if ($productByDate['category_id'] === $originalSite) {
