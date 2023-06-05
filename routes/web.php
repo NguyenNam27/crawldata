@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RunCommandController;
@@ -18,11 +19,11 @@ use App\Http\Controllers\ProductController;
 */
 
 Route::get('/run-command', [RunCommandController::class,'runCommand'])->name('run-command');
-Route::get('login', [LoginController::class, 'index'])->name('login');
-Route::post('post-login', [LoginController::class, 'postLogin'])->name('login.post');
+Route::get('register', [AuthController::class, 'register'])->name('register');
+Route::post('post-register', [AuthController::class, 'postRegister'])->name('register.post');
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
 
-Route::get('register', [LoginController::class, 'register'])->name('register');
-Route::post('post-register', [LoginController::class, 'postRegister'])->name('register.post');
 
 //Route::get('scraper',[RunCommandController::class,'scraper']);
 Route::resource('category', CategoryController::class);

@@ -144,6 +144,7 @@
             <div class="signup-form">
                 <div class="title">Signup</div>
                 <form action="{{ route('register.post') }}" method="POST">
+                    @csrf
                     <div class="input-boxes">
                         <div class="input-box">
                             <i class="fas fa-user"></i>
