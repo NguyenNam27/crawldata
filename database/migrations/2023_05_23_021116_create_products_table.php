@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('price_cost')->nullable();
             $table->string('link_product')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 //            $table->foreign('category_id')->references('id')->on('categories')->constrained();
         });
     }

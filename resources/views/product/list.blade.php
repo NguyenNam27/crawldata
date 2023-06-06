@@ -34,8 +34,6 @@
                             </div>
 
                             <div class="col-sm-3 col-md-3">
-                                <form action="" method="GET" class="navbar-form" name="search">
-                                    @csrf
                                     <div class="input-group">
                                         <select class="form-select form-select-sm" aria-label=".form-select-sm example">
                                             <option selected>--Chọn site gốc--</option>
@@ -45,11 +43,9 @@
                                             <option value="3">Boss</option>
                                         </select>
                                     </div>
-                                </form>
                             </div>
 
                             <div class="col-sm-3 col-md-3">
-                                <form action="" method="GET" class="navbar-form" name="search">
                                     @csrf
                                     <div class="input-group">
                                         <select class="form-select form-select-sm" aria-label=".form-select-sm example">
@@ -60,7 +56,6 @@
                                             <option value="3">Boss</option>
                                         </select>
                                     </div>
-                                </form>
                             </div>
 
                             <div class="col-sm-3 col-md-3">

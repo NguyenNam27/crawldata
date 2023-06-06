@@ -25,9 +25,7 @@ class ProductController extends Controller
             ->where('name', 'like', '%' . $search . '%')
             ->orderBy('created_at', 'desc')
             ->get();
-//        dd($products);
         $result = [];
-
         // sites gốc
         $originalSites = [
             'https://junger.vn',
@@ -45,7 +43,7 @@ class ProductController extends Controller
         }
         // Cấu trúc dữ liệu quyết định thuật toán
         //Unique: (name, created_at)
-        //for toaàn bộ
+        //for toàn bộ
         foreach($products->groupBy('name') as $name => $productByName) {
             foreach($productByName->groupBy('unique_product_by_date') as $date => $productsByDate) {
                 $originalPrice = 0;

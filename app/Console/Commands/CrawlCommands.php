@@ -159,7 +159,7 @@ class CrawlCommands extends Command
         }
 
         $client = new Client();
-        $poongSanUrl = $url = 'https://poongsankorea.vn';
+        $poongSanUrl ='https://poongsankorea.vn';
         $category = new Category;
         $category->url = $url;
         $category->save();
@@ -222,7 +222,6 @@ class CrawlCommands extends Command
                 $checkpagination->each(
                     function (Crawler $node) use (&$existData) {
                         $url = 'https://hawonkoo.vn';
-
                         $name = $node->filter('a h3.product_name')->text();
                         preg_match_all('/([\w\d]+)-.*/',$name , $code);
                         $code_product1 = $code[0];
@@ -295,46 +294,46 @@ class CrawlCommands extends Command
 
             }
         }
-//        $client = new Client();
-//        $url = 'https://www.dienmayxanh.com/search?key=junger';
-//        $category = new Category;
-//        $category->url = $url;
-//        $category->save();
-//        $crawler = $client->request('GET', $url);
-//        $dmxUrl = "https://www.dienmayxanh.com";
-//
-//        $existData = Product::selectRaw("CONCAT(name, '@@', DATE_FORMAT(created_at, '%Y-%m-%d')) as unique_product_by_date")
-//            ->where('category_id', $dmxUrl)
-//            ->get()
-//            ->pluck('unique_product_by_date')
-//            ->toArray();
-//
-//        $crawler->filter('ul.listproduct li.item')->each(
-//            function (Crawler $node) use ($existData) {
-//                $url = 'https://www.dienmayxanh.com';
-//
-//                $name = $node->filter('a h3')->text();
-//                preg_match_all('/([\w\d]+)-.*/',$name , $code);;
-//                $code_product1 = $code[0];
-//                $code_product = implode(" ",$code_product1);
-//                $price = $node->filter('.price')->text();
-//
-//                $link_product = $node->filter('a.main-contain')->attr('href');
-//
-//                $link = $url . $link_product;
-//
-//                $price_partner = preg_replace('/\D/', '', $price);
-//
-//                $productByNameAndDate = $name . '@@' . Carbon::now()->format('Y-m-d');
-//                if (!in_array($productByNameAndDate, $existData)) {
-//                    $product = new Product;
-//                    $product->code_product = $code_product;
-//                    $product->name = $name;
-//                    $product->price_cost = empty($price_partner) ? 0 : $price_partner;
-//                    $product->category_id = $url;
-//                    $product->link_product = $link;
-//                    $product->save();
-//                }
-//            });
+        $client = new Client();
+        $url = 'https://www.dienmayxanh.com/search?key=junger';
+        $category = new Category;
+        $category->url = $url;
+        $category->save();
+        $crawler = $client->request('GET', $url);
+        $dmxUrl = "https://www.dienmayxanh.com";
+
+        $existData = Product::selectRaw("CONCAT(name, '@@', DATE_FORMAT(created_at, '%Y-%m-%d')) as unique_product_by_date")
+            ->where('category_id', $dmxUrl)
+            ->get()
+            ->pluck('unique_product_by_date')
+            ->toArray();
+
+        $crawler->filter('ul.listproduct li.item')->each(
+            function (Crawler $node) use ($existData) {
+                $url = 'https://www.dienmayxanh.com';
+
+                $name = $node->filter('a h3')->text();
+                preg_match_all('/([\w\d]+)-.*/',$name , $code);;
+                $code_product1 = $code[0];
+                $code_product = implode(" ",$code_product1);
+                $price = $node->filter('.price')->text();
+
+                $link_product = $node->filter('a.main-contain')->attr('href');
+
+                $link = $url . $link_product;
+
+                $price_partner = preg_replace('/\D/', '', $price);
+
+                $productByNameAndDate = $name . '@@' . Carbon::now()->format('Y-m-d');
+                if (!in_array($productByNameAndDate, $existData)) {
+                    $product = new Product;
+                    $product->code_product = $code_product;
+                    $product->name = $name;
+                    $product->price_cost = empty($price_partner) ? 0 : $price_partner;
+                    $product->category_id = $url;
+                    $product->link_product = $link;
+                    $product->save();
+                }
+            });
     }
 }

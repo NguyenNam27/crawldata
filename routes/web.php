@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RunCommandController;
@@ -24,6 +25,7 @@ Route::post('post-register', [AuthController::class, 'postRegister'])->name('reg
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
 
+Route::resource('users', UserController::class);
 
 //Route::get('scraper',[RunCommandController::class,'scraper']);
 Route::resource('category', CategoryController::class);

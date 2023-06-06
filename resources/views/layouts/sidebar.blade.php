@@ -14,21 +14,32 @@
 
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
+          <li class="active">
+              <a href="">
+                  <i class="fa fa-list"></i> <span>QUẢN LÝ USER </span>
+              </a>
+          </li>
+          <li class="active">
+              <a href="">
+                  <i class="fa fa-list"></i> <span>QUẢN LÝ ĐỐI TÁC </span>
+              </a>
+          </li>
+
         <li class="active">
           <a href="{{route('category.index')}}">
-            <i class="fa fa-list"></i> <span>QUẢN LÝ DANH MỤC</span>
+            <i class="fa fa-list"></i> <span>QUẢN LÝ DANH MỤC SẢN PHẨM</span>
           </a>
         </li>
           <li class="active">
               <a href="{{route('list')}}">
-                  <i class="fa fa-list"></i> <span>QUẢN LÝ SẢN PHẨM</span>
+                  <i class="fa fa-list"></i> <span>QUẢN LÝ SẢN PHẨM ĐỐI TÁC</span>
               </a>
           </li>
-{{--          <li class="active">--}}
-{{--              <a href="">--}}
-{{--                  <i class="fa fa-list"></i> <span>QUẢN LÝ GIÁ</span>--}}
-{{--              </a>--}}
-{{--          </li>--}}
+          <li class="active">
+              <a href="">
+                  <i class="fa fa-list"></i> <span>LỊCH SỬ</span>
+              </a>
+          </li>
       </ul>
     </section>
     <!-- /.sidebar -->
