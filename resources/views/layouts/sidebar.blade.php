@@ -20,19 +20,24 @@
               </a>
           </li>
           <li class="active">
-              <a href="">
+              <a href="{{route('partner.index')}}">
                   <i class="fa fa-list"></i> <span>QUẢN LÝ ĐỐI TÁC </span>
               </a>
           </li>
 
         <li class="active">
-          <a href="{{route('category.index')}}">
+          <a href="{{route('list-category')}}">
             <i class="fa fa-list"></i> <span>QUẢN LÝ DANH MỤC SẢN PHẨM</span>
           </a>
         </li>
           <li class="active">
               <a href="{{route('list')}}">
                   <i class="fa fa-list"></i> <span>QUẢN LÝ SẢN PHẨM ĐỐI TÁC</span>
+              </a>
+          </li>
+          <li class="active">
+              <a href="{{route('list')}}">
+                  <i class="fa fa-list"></i> <span>QUẢN LÝ SẢN PHẨM GỐC</span>
               </a>
           </li>
           <li class="active">

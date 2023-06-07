@@ -5,13 +5,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Thêm danh mục sản phẩm <a href="{{route('list-category')}}" class="btn bg-purple "><i
+                Cập nhập danh mục sản phẩm <a href="{{route('list-category')}}" class="btn bg-purple "><i
                         class="fa fa-plus"></i> Danh sách danh mục sản phẩm</a>
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="#"> DANH MỤC SẢN PHẨM </a></li>
+                <li><a href="#">CẬP NHẬP DANH MỤC SẢN PHẨM </a></li>
 
             </ol>
         </section>
@@ -28,15 +28,16 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
+                        @foreach($edit_category as $key=>$edit_value)
 
-                        <form role="form" action="{{route('save-category')}}" method="post" enctype="multipart/form-data">
+                        <form  action="{{URL::to('update-category/'.$edit_value->id)}}" method="post" >
                             {{ csrf_field() }}
                             <div class="box-body">
                                 <div class="col-md-6">
 
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Name </label>
-                                        <input data-validation="required"
+                                        <input value="{{$edit_value->name}}" data-validation="required"
                                                data-validation-error-msg="Vui lòng điền tên danh mục"
                                                type="text" class="form-control" name="name" id=""
                                                placeholder="Enter name">
@@ -44,7 +45,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Link</label>
-                                        <input class="form-control" type="text" name="url">
+                                        <input value="{{$edit_value->url}}" class="form-control" type="text" name="url">
 
 
                                     </div>
@@ -60,12 +61,16 @@
 
                                 </div>
                             </div>
+
                             <!-- /.box-body -->
 
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-primary">Create</button>
+                                <button type="submit" class="btn btn-primary">Update</button>
                             </div>
                         </form>
+                        @endforeach
+
+
                     </div>
                     <!-- /.box -->
                 </div>
