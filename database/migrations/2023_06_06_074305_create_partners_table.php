@@ -17,7 +17,7 @@ class CreatePartnersTable extends Migration
             $table->id();
             $table->string('names')->nullable();
             $table->string('url')->nullable();
-            $table->string('detail')->nullable();
+            $table->json('values')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -16,6 +16,8 @@ class ProductController extends Controller
     public function getList(Request $request)
     {
         $search = $request->input('search');
+        $date = '';
+
         $sites = Product::select('category_id')
             ->groupBy('category_id')
             ->get()
@@ -23,6 +25,7 @@ class ProductController extends Controller
 
         $products = Product::selectRaw("name, DATE_FORMAT(created_at, '%Y-%d-%m') as unique_product_by_date, price_cost, category_id, code_product, link_product")
             ->where('name', 'like', '%' . $search . '%')
+//            ->whereDate('created_at','like', '%' .$date. '%')
             ->orderBy('created_at', 'desc')
             ->get();
         $result = [];

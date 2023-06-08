@@ -25,7 +25,6 @@ class TGDD
             $crawler = $client->request('GET', $url);
             $listItems = $crawler->filter('.product-list .card');
             $mediaMartUrl = 'https://mediamart.vn';
-
             $newProducts = [];
             if (count($listItems) > 0) {
                 $existData = Product::selectRaw("CONCAT(name, '@@', DATE_FORMAT(created_at, '%Y-%m-%d')) as unique_product_by_date")
@@ -33,7 +32,6 @@ class TGDD
                     ->get()
                     ->pluck('unique_product_by_date')
                     ->toArray();
-
                 try {
                     DB::enableQueryLog();
                     $listItems->each(
