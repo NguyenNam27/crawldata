@@ -28,16 +28,14 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        @foreach($edit_category as $key=>$edit_value)
-
-                        <form  action="{{URL::to('update-category/'.$edit_value->id)}}" method="post" >
+                        <form  action="{{URL::to('update-category/'.$edit_category->id)}}" method="POST" enctype="multipart/form-data" >
                             {{ csrf_field() }}
                             <div class="box-body">
                                 <div class="col-md-6">
 
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Name </label>
-                                        <input value="{{$edit_value->name}}" data-validation="required"
+                                        <input value="{{$edit_category->name}}" data-validation="required"
                                                data-validation-error-msg="Vui lòng điền tên danh mục"
                                                type="text" class="form-control" name="name" id=""
                                                placeholder="Enter name">
@@ -45,7 +43,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Link</label>
-                                        <input value="{{$edit_value->url}}" class="form-control" type="text" name="url">
+                                        <input value="{{$edit_category->url}}" class="form-control" type="text" name="url">
 
 
                                     </div>
@@ -68,9 +66,6 @@
                                 <button type="submit" class="btn btn-primary">Update</button>
                             </div>
                         </form>
-                        @endforeach
-
-
                     </div>
                     <!-- /.box -->
                 </div>

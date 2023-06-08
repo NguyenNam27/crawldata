@@ -36,10 +36,16 @@ Route::get('edit-category/{id}', [CategoryController::class,'edit_category'])->n
 Route::post('save-category', [CategoryController::class,'saveCategory'])->name('save-category');
 Route::post('update-category/{id}', [CategoryController::class,'update_category'])->name('update_category');
 Route::get('delete-category/{id}', [CategoryController::class,'delete_category']);
-
-//Route::resource('category', CategoryController::class);
 //đối tác
-Route::resource('partner', PartnerController::class);
+Route::get('list-partner', [PartnerController::class,'listPartner'])->name('list-partner');
+Route::get('add-partner', [PartnerController::class,'addPartner'])->name('add-partner');
+Route::get('edit-partner/{id}', [PartnerController::class,'edit_partner'])->name('edit_partner');
+Route::post('update-partner/{id}', [PartnerController::class,'update_partner'])->name('update_partner');
+
+Route::post('save-partner', [PartnerController::class,'savePartner'])->name('save-partner');
+Route::get('delete-partner/{id}', [PartnerController::class,'delete_partner']);
+
+//Route::resource('partner', PartnerController::class);
 //sản phẩm
 Route::get('product', [ProductController::class,'getList'])->name('list');
 Route::get('search',[ProductController::class,'search'])->name('search');

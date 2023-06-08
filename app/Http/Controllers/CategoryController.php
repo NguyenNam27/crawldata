@@ -32,21 +32,19 @@ class CategoryController extends Controller
         return Redirect::to('list-category');
     }
     public function edit_category($id){
-        $edit_category = DB::table('categories')->where('id',$id)->get();
-//        $manager_category_product  = view('admin.edit_category_product')->with('edit_category_product',$edit_category_product);
-
+        $edit_category = DB::table('categories')->where('id',$id)->first();
         return view('category.edit',[
             'edit_category'=>$edit_category
         ]);
     }
-    public function update_category(Request $request,$category_product_id){
+    public function update_category(Request $request,$id){
         $data = array();
 
         $data['name'] = $request->name;
         $data['url'] = $request->url;
         $data['status'] = $request->status;
 
-        DB::table('categories')->update($data);
+        DB::table('categories')->where('id',$id)->update($data);
         Session::put('message','Sửa danh mục sản phẩm thành công');
         return Redirect::to('list-category');
     }

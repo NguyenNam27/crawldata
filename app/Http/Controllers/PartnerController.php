@@ -2,87 +2,75 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Partner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class PartnerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
+    public function listPartner(){
         $partnerList = DB::table('partners')->paginate(10);
         return view('partner.list',[
             'partnerList'=>$partnerList
         ]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view( 'partner.create');
+    public function addPartner(){
+        return view('partner.create');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-
+    public function savePartner(Request $request){
+        $data = [
+            'name'=>$request->name,
+            'url'=>$request->url,
+            'values'=>[
+                'class_cha'=>$request->input('values_cha'),
+                'class_name'=>$request->input('values_cha'),
+                'class_price'=>$request->input('values_price'),
+                'class_link'=>$request->input('values_link'),
+            ]
+        ];
+        Partner::create($data);
+        Session::put('message','Thêm đối tác thành công');
+        return Redirect::to('list-partner');
     }
+    public function edit_partner($id){
+        $edit_partner = DB::table('partners')->where('id',$id)->first();
+        $jsonData = $edit_partner->values;
+        $value= $jsonData['class_cha'];
+        dd($value);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return view('partner.edit',[
+            'edit_partner'=>$edit_partner,
+            'jsonData'=>$jsonData
+        ]);
     }
+    public function update_partner(Request $request,$id){
+        $data = [
+            'name'=>$request->name,
+            'url'=>$request->url,
+            'values'=>[
+                'class_cha'=>$request->input('values_cha'),
+                'class_name'=>$request->input('values_name'),
+                'class_price'=>$request->input('values_price'),
+                'class_link'=>$request->input('values_link'),
+            ]
+        ];
+//        $data = DB::table('partners')
+//            ->select('values->class_cha as value')
+//            ->where('id', $id)
+//            ->first();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+//        $partner = Partner::find($id);
+//        $jsonData = $partner->values;
+//        $value = $jsonData['class_cha'];
+        DB::table('partners')->where('id',$id)->update($data);
+        Session::put('message','Thêm đối tác thành công');
+        return Redirect::to('list-partner');
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function delete_partner($id){
+        DB::table('partners')->where('id',$id)->delete();
+        Session::put('message','Xóa đối tác thành công');
+        return Redirect::to('list-partner');
     }
 }

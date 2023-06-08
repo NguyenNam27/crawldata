@@ -9,9 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 class Partner extends Model
 {
     use HasFactory;
+    public $timestamps=true;
 
     protected $table = 'partners';
-    protected $fillable = ['name', 'url', 'values'];
+    protected $fillable = ['name', 'url', 'values','status'];
 
     protected $casts = [
         'values' => 'array',
