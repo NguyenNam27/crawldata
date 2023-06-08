@@ -23,7 +23,7 @@
                         <?php
                         $message = Session::get('message');
                         if($message){
-                            echo '<h3 class="text-alert" style="color: red">'.$message.'</h3>';
+                            echo '<h3 class="text-alert" style="color: red">' .$message. '</h3>';
                             Session::put('message',null);
                         }
                         ?>

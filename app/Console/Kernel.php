@@ -9,6 +9,8 @@ class Kernel extends ConsoleKernel
 {
     protected $commands =[
         Commands\CrawlCommands::class,
+        Commands\CrawlProductOriginalCommand::class,
+        Commands\CrawlProductPartnerCommand::class,
     ];
 
 

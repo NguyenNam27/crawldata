@@ -5,11 +5,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Thêm Đối Tác <a href="{{route('list-partner')}}" class="btn bg-purple "><i class="fa fa-plus"></i> Danh sách đối tác</a>
+                Cập nhập Đối Tác <a href="{{route('list-partner')}}" class="btn bg-purple "><i class="fa fa-plus"></i>danh sách đối tác</a>
+
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="#"> BRAND </a></li>
+                <li><a href="#"> CẬP NHẬP THÔNG TIN ĐỐI TÁC </a></li>
 
             </ol>
         </section>
@@ -27,39 +28,39 @@
                         <!-- /.box-header -->
                         <!-- form start -->
 
-                        <form action="{{route('save-partner')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{URL::to('update-partner/'.$edit_partner->id)}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="box-body">
                                 <div class="col-md-6">
 
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Name Partner</label>
-                                        <input data-validation="required"
-                                               data-validation-error-msg="Vui lòng điền tên đối tác"
+                                        <input value="{{$edit_partner->name}}" data-validation="required"
+                                               data-validation-error-msg=""
                                                type="text" class="form-control" name="name" id=""
                                                placeholder="Enter name">
 
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">URL</label>
-                                        <input class="form-control" type="text" id="" name="url">
+                                        <input value="{{$edit_partner->url}}" class="form-control" type="text" id="" name="url">
 
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Value class cha </label>
-                                        <input class="form-control" type="text" id="" name="values_cha">
+                                        <input value="{{$jsonData}}" class="form-control" type="text" id="" name="values_cha">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Value class NameSP </label>
-                                        <input class="form-control" type="text" id="" name="values_name">
+                                        <input value="{{$jsonData}}" class="form-control" type="text" id="" name="values_name">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Value class PriceSP </label>
-                                        <input class="form-control" type="text" id="" name="values_price">
+                                        <input value="{{$jsonData}}" class="form-control" type="text" id="" name="values_price">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Value class LinkSP </label>
-                                        <input class="form-control" type="text" id="" name="values_link">
+                                        <input value="{{$jsonData}}" class="form-control" type="text" id="" name="values_link">
                                     </div>
 
                                 </div>
@@ -67,7 +68,7 @@
                             <!-- /.box-body -->
 
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-primary">Create</button>
+                                <button type="submit" class="btn btn-primary">Update</button>
                             </div>
                         </form>
                     </div>

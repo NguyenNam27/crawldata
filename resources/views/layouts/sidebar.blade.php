@@ -20,12 +20,13 @@
               </a>
           </li>
           <li class="active">
-              <a href="{{route('partner.index')}}">
+              <a href="{{route('list-partner')}}">
                   <i class="fa fa-list"></i> <span>QUẢN LÝ ĐỐI TÁC </span>
               </a>
           </li>
 
         <li class="active">
+
           <a href="{{route('list-category')}}">
             <i class="fa fa-list"></i> <span>QUẢN LÝ DANH MỤC SẢN PHẨM</span>
           </a>
