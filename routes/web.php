@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\ProductOriginController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,10 @@ Route::post('update-partner/{id}', [PartnerController::class,'update_partner'])-
 
 Route::post('save-partner', [PartnerController::class,'savePartner'])->name('save-partner');
 Route::get('delete-partner/{id}', [PartnerController::class,'delete_partner']);
+//sản phẩm gốc
+Route::get('list-product-original',[ProductOriginController::class,'listProductOriginal']);
+Route::get('add-product-original',[ProductOriginController::class,'addProductOriginal']);
+Route::post('save-product-original',[ProductOriginController::class,'saveProductOriginal']);
 
 //Route::resource('partner', PartnerController::class);
 //sản phẩm

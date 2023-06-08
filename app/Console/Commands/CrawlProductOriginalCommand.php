@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\CatalogProductOriginal;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductOriginal;
 use Carbon\Carbon;
 use Goutte\Client;
 use Illuminate\Console\Command;
@@ -56,8 +58,8 @@ class CrawlProductOriginalCommand extends Command
             foreach ($array as $arr) {
                 for ($page = 1; $page <= 9999; $page++) {
                     $url = 'https://junger.vn/' . $arr . '?p=' . $page;
-                    $category = new Category;
-                    $category->url = $url;
+                    $category = new CatalogProductOriginal();
+                    $category->name = $url;
                     $category->save();
                     $crawler = $client->request('GET', $url);
                     $checkItems = $crawler->filter('.item-wrapper');
@@ -78,12 +80,12 @@ class CrawlProductOriginalCommand extends Command
 
                             $productByNameAndDate = $name . '@@' . Carbon::now()->format('Y-m-d');
                             if (!in_array($productByNameAndDate, $existData)) {
-                                $product = new Product;
-                                $product->code_product = $code_product;
-                                $product->name = $name;
-                                $product->price_cost = empty($price2) ? 0 : $price2;
-                                $product->category_id = $jungerUrl;
-                                $product->link_product = $link;
+                                $product = new ProductOriginal;
+                                $product->code_product_original = $code_product;
+                                $product->name_product_original = $name;
+                                $product->price_product_original = empty($price2) ? 0 : $price2;
+                                $product->catalog_product_original_id = $jungerUrl;
+                                $product->url_product_original = $link;
                                 $product->save();
                                 $existData[] = $productByNameAndDate;
                             }
@@ -98,8 +100,8 @@ class CrawlProductOriginalCommand extends Command
         //site Poongsan
         $client = new Client();
         $poongSanUrl ='https://poongsankorea.vn';
-        $category = new Category;
-        $category->url = $url;
+        $category = new CatalogProductOriginal;
+        $category->name = $url;
         $category->save();
         $crawler = $client->request('GET', $url);
 
@@ -122,12 +124,12 @@ class CrawlProductOriginalCommand extends Command
 
                 $productByNameAndDate = $name . '@@' . Carbon::now()->format('Y-m-d');
                 if (!in_array($productByNameAndDate, $existData)) {
-                    $product = new Product;
-                    $product->code_product = $code_product;
-                    $product->name = $name;
-                    $product->price_cost = empty($price2) ? 0 : $price2;
-                    $product->category_id = $poongSanUrl;
-                    $product->link_product = $link;
+                    $product = new ProductOriginal;
+                    $product->code_product_original = $code_product;
+                    $product->name_product_original = $name;
+                    $product->price_product_original = empty($price2) ? 0 : $price2;
+                    $product->catalog_product_original_id = $poongSanUrl;
+                    $product->url_product_original = $link;
                     $product->save();
                 }
             });
@@ -146,8 +148,8 @@ class CrawlProductOriginalCommand extends Command
         foreach ($arrayHWK as $arrHWK) {
             for ($page = 1; $page < 10; $page++){
                 $url = 'https://hawonkoo.vn/'.$arrHWK.'?p='.$page;
-                $category = new Category;
-                $category->url = $url;
+                $category = new CatalogProductOriginal();
+                $category->name = $url;
                 $category->save();
                 $crawler = $client->request('GET', $url);
                 $checkpagination = $crawler->filter('.product_content');
@@ -169,12 +171,12 @@ class CrawlProductOriginalCommand extends Command
 
                         $productByNameAndDate = $name . '@@' . Carbon::now()->format('Y-m-d');
                         if (!in_array($productByNameAndDate, $existData)) {
-                            $product = new Product;
-                            $product->code_product = $code_product;
-                            $product->name = $name;
-                            $product->price_cost = empty($price2) ? 0 : $price2;
-                            $product->category_id = $url;
-                            $product->link_product = $link;
+                            $product = new ProductOriginal;
+                            $product->code_product_original = $code_product;
+                            $product->name_product_original = $name;
+                            $product->price_product_original = empty($price2) ? 0 : $price2;
+                            $product->catalog_product_original_id = $url;
+                            $product->url_product_original = $link;
                             $product->save();
                             $existData[] = $productByNameAndDate;
                         }
@@ -198,8 +200,8 @@ class CrawlProductOriginalCommand extends Command
 
         foreach ($arrayBoss as $arrBoss){
             $url = 'https://bossmassage.vn/'.$arrBoss;
-            $category = new Category;
-            $category->url = $url;
+            $category = new CatalogProductOriginal;
+            $category->name = $url;
             $category->save();
             $crawler = $client->request('GET', $url);
             $listItem = $crawler->filter('.single_product');
@@ -219,12 +221,12 @@ class CrawlProductOriginalCommand extends Command
 
                         $productByNameAndDate = $name . '@@' . Carbon::now()->format('Y-m-d');
                         if (!in_array($productByNameAndDate, $existData)) {
-                            $product = new Product;
-                            $product->code_product = $code_product;
-                            $product->name = $name;
-                            $product->price_cost = empty($price2) ? 0 : $price2;
-                            $product->category_id = $url;
-                            $product->link_product = $link;
+                            $product = new ProductOriginal;
+                            $product->code_product_original = $code_product;
+                            $product->name_product_original = $name;
+                            $product->price_product_original = empty($price2) ? 0 : $price2;
+                            $product->catalog_product_original_id = $url;
+                            $product->url_product_original = $link;
                             $product->save();
                         }
                     });

@@ -36,26 +36,26 @@ class PartnerController extends Controller
     }
     public function edit_partner($id){
         $edit_partner = DB::table('partners')->where('id',$id)->first();
-        $jsonData = $edit_partner->values;
-        $value= $jsonData['class_cha'];
-        dd($value);
+//        $jsonData = $edit_partner->values;
+//        $decodeData=json_decode($jsonData);
+//        dd($decodeData->class_cha);
 
         return view('partner.edit',[
             'edit_partner'=>$edit_partner,
-            'jsonData'=>$jsonData
+//            'jsonData'=>$jsonData
         ]);
     }
     public function update_partner(Request $request,$id){
-        $data = [
-            'name'=>$request->name,
-            'url'=>$request->url,
-            'values'=>[
-                'class_cha'=>$request->input('values_cha'),
-                'class_name'=>$request->input('values_name'),
-                'class_price'=>$request->input('values_price'),
-                'class_link'=>$request->input('values_link'),
-            ]
-        ];
+//        $data = [
+//            'name'=>$request->name,
+//            'url'=>$request->url,
+//            'values'=>[
+//                'class_cha'=>$request->input('values_cha'),
+//                'class_name'=>$request->input('values_name'),
+//                'class_price'=>$request->input('values_price'),
+//                'class_link'=>$request->input('values_link'),
+//            ]
+//        ];
 //        $data = DB::table('partners')
 //            ->select('values->class_cha as value')
 //            ->where('id', $id)
@@ -64,9 +64,9 @@ class PartnerController extends Controller
 //        $partner = Partner::find($id);
 //        $jsonData = $partner->values;
 //        $value = $jsonData['class_cha'];
-        DB::table('partners')->where('id',$id)->update($data);
-        Session::put('message','Thêm đối tác thành công');
-        return Redirect::to('list-partner');
+//        DB::table('partners')->where('id',$id)->update($data);
+//        Session::put('message','Thêm đối tác thành công');
+//        return Redirect::to('list-partner');
     }
     public function delete_partner($id){
         DB::table('partners')->where('id',$id)->delete();
