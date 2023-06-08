@@ -34,7 +34,7 @@
                                     <th>Name</th>
                                     <th>Link</th>
                                     <th>Status</th>
-                                    <th>Hành Động</th>
+                                    <th>Thao tác</th>
                                 </tr>
                                 @foreach($category as $key => $item)
                                     <tr class="item-{{ $item->id }}">
