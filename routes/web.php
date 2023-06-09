@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ProductOriginController;
+use App\Http\Controllers\ProductPartnerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -46,9 +47,18 @@ Route::post('update-partner/{id}', [PartnerController::class,'update_partner'])-
 Route::post('save-partner', [PartnerController::class,'savePartner'])->name('save-partner');
 Route::get('delete-partner/{id}', [PartnerController::class,'delete_partner']);
 //sản phẩm gốc
-Route::get('list-product-original',[ProductOriginController::class,'listProductOriginal']);
-Route::get('add-product-original',[ProductOriginController::class,'addProductOriginal']);
-Route::post('save-product-original',[ProductOriginController::class,'saveProductOriginal']);
+Route::get('list-product-original',[ProductOriginController::class,'listProductOriginal'])->name('list-product-original');
+Route::get('add-product-original',[ProductOriginController::class,'addProductOriginal'])->name('add-product-original');
+Route::get('edit-product-original/{id}',[ProductOriginController::class,'editProductOriginal'])->name('edit-product-original');
+Route::post('save-product-original',[ProductOriginController::class,'saveProductOriginal'])->name('save-product-original');
+Route::post('update-product-original/{id}',[ProductOriginController::class,'updateProductOriginal'])->name('update-product-original');
+Route::get('delete-product-original/{id}',[ProductOriginController::class,'delete_ProductOriginal'])->name('delete-product-original');
+
+//sản phầm đối tác
+
+Route::get('list-product-partner',[ProductPartnerController::class,'listProductPartner'])->name('list-product-partner');
+
+Route::get('compare-price',[ProductPartnerController::class,'comparePrices']);
 
 //Route::resource('partner', PartnerController::class);
 //sản phẩm

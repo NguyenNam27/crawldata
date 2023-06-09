@@ -33,12 +33,17 @@
         </li>
           <li class="active">
               <a href="{{route('list')}}">
-                  <i class="fa fa-list"></i> <span>QUẢN LÝ SẢN PHẨM ĐỐI TÁC</span>
+                  <i class="fa fa-list"></i> <span>QUẢN LÝ SẢN PHẨM </span>
               </a>
           </li>
           <li class="active">
-              <a href="{{route('list')}}">
+              <a href="{{route('list-product-original')}}">
                   <i class="fa fa-list"></i> <span>QUẢN LÝ SẢN PHẨM GỐC</span>
+              </a>
+          </li>
+          <li class="active">
+              <a href="{{route('list-product-partner')}}">
+                  <i class="fa fa-list"></i> <span>QUẢN LÝ SẢN PHẨM ĐỐI TÁC</span>
               </a>
           </li>
           <li class="active">

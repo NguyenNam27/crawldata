@@ -48,19 +48,28 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Value class cha </label>
-                                        <input value="" class="form-control" type="text" id="" name="values_cha">
+                                        <input value="{{$decodeData->class_cha}}" class="form-control" type="text" id="" name="values_cha">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Value class NameSP </label>
-                                        <input value="" class="form-control" type="text" id="" name="values_name">
+                                        <input value="{{$decodeData->class_name}}" class="form-control" type="text" id="" name="values_name">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Value class PriceSP </label>
-                                        <input value="" class="form-control" type="text" id="" name="values_price">
+                                        <input value="{{$decodeData->class_price}}" class="form-control" type="text" id="" name="values_price">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Value class LinkSP </label>
-                                        <input value="" class="form-control" type="text" id="" name="values_link">
+                                        <input value="{{$decodeData->class_link}}" class="form-control" type="text" id="" name="values_link">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Status</label>
+                                        <select class="form-control" name="status">
+                                            <option value="{{$edit_partner->status}}" disabled>--Chọn--</option>
+                                            <option value="1">Kích hoạt</option>
+                                            <option value="0">Không kích hoạt</option>
+                                        </select>
+
                                     </div>
 
                                 </div>

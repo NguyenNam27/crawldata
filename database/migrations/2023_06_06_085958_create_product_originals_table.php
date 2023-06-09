@@ -19,9 +19,12 @@ class CreateProductOriginalsTable extends Migration
             $table->string('name_product_original');
             $table->string('price_product_original');
             $table->string('url_product_original');
-            $table->string('catalog_product_original_id');
+            $table->string('category_id');
+            $table->string('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
+//            $table->foreignId('category_id')->references('id')->on('categories')->constrained();
+
         });
     }
 

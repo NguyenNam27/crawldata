@@ -15,10 +15,11 @@ class CreateProductPartnersTable extends Migration
     {
         Schema::create('product_partners', function (Blueprint $table) {
             $table->id();
-            $table->string('code_product_partner');
-            $table->string('name_product_partner');
-            $table->string('price_product_partner');
-            $table->string('url_product_partner');
+            $table->string('code_product_partner')->nullable();
+            $table->string('name_product_partner')->nullable();
+            $table->string('price_product_partner')->nullable();
+            $table->string('url_product_partner')->nullable();
+            $table->string('category_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

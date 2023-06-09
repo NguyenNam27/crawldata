@@ -61,6 +61,10 @@
                                         <label for="exampleInputEmail1">Value class LinkSP </label>
                                         <input class="form-control" type="text" id="" name="values_link">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Value Regex Expression </label>
+                                        <input class="form-control" type="text" id="" name="values_regex">
+                                    </div>
 
                                 </div>
                             </div>

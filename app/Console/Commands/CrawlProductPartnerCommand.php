@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\CatalogProductOriginal;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductPartner;
 use Carbon\Carbon;
 use Goutte\Client;
 use Illuminate\Console\Command;
@@ -47,7 +49,7 @@ class CrawlProductPartnerCommand extends Command
         try {
             $client = new Client();
             $url = 'https://mediamart.vn/tag?key=hawonkoo';
-            $category = new Category;
+            $category = new Category();
             $category->url = $url;
             $category->save();
             $crawler = $client->request('GET', $url);
@@ -81,18 +83,18 @@ class CrawlProductPartnerCommand extends Command
                             $productNameByDate = $name . '@@' . $now;
                             if (!in_array($productNameByDate, $existData)) {
                                 $newProducts[] = [
-                                    'code_product'=>$code_product,
-                                    'name' => $name,
-                                    'price_cost' => $price3,
+                                    'code_product_partner'=>$code_product,
+                                    'name_product_partner' => $name,
+                                    'price_product_partner' => $price3,
                                     'category_id' => $mediaMartUrl,
-                                    'link_product' => $link,
+                                    'url_product_partner' => $link,
                                     'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                                 ];
                             }
                         });
 
-                    Product::insert($newProducts);
+                    ProductPartner::insert($newProducts);
                     DB::commit();
                 } catch (\Exception $exception) {
                     DB::rollBack();
@@ -106,7 +108,7 @@ class CrawlProductPartnerCommand extends Command
 
         $client = new Client();
         $url = 'https://www.dienmayxanh.com/search?key=junger';
-        $category = new Category;
+        $category = new Category();
         $category->url = $url;
         $category->save();
         $crawler = $client->request('GET', $url);
@@ -136,12 +138,12 @@ class CrawlProductPartnerCommand extends Command
 
                 $productByNameAndDate = $name . '@@' . Carbon::now()->format('Y-m-d');
                 if (!in_array($productByNameAndDate, $existData)) {
-                    $product = new Product;
-                    $product->code_product = $code_product;
-                    $product->name = $name;
-                    $product->price_cost = empty($price_partner) ? 0 : $price_partner;
+                    $product = new ProductPartner;
+                    $product->code_product_partner = $code_product;
+                    $product->name_product_partner = $name;
+                    $product->price_product_partner = empty($price_partner) ? 0 : $price_partner;
                     $product->category_id = $url;
-                    $product->link_product = $link;
+                    $product->url_product_partner = $link;
                     $product->save();
                 }
             });
