@@ -31,6 +31,7 @@ class PartnerController extends Controller
                 'class_name'=>$request->input('values_name'),
                 'class_price'=>$request->input('values_price'),
                 'class_link'=>$request->input('values_link'),
+                'class_regex'=>$request->input('values_regex'),
             ],
 
         ];
@@ -42,7 +43,6 @@ class PartnerController extends Controller
         $edit_partner = DB::table('partners')->where('id',$id)->first();
         $jsonData = $edit_partner->values;
         $decodeData=json_decode($jsonData);
-//        dd($decodeData->class_cha);
 
         return view('partner.edit',[
             'edit_partner'=>$edit_partner,

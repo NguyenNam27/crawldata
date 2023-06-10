@@ -62,8 +62,19 @@
                                         <input class="form-control" type="text" id="" name="values_link">
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Value Regex Expression </label>
-                                        <input class="form-control" type="text" id="" name="values_regex">
+                                        <label for="exampleInputEmail1">Value Regex getCodebyName </label><br>
+                                        <span><strong> ->Gợi ý : '/([\w\d]+)-.*/'</strong></span>
+                                        <input class="form-control" type="text" id="" name="values_regex_code">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Value Regex getPriceArr </label> <br>
+                                        <span> <strong> ->Gợi ý : '/([0-9\.,]+)\s?\w+/'</strong> </span>
+                                        <input class="form-control" type="text" id="" name="values_regex_priceArr">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Convert getPrice </label> <br>
+                                        <span> <strong> ->Gợi ý : '/\D/'</strong> </span>
+                                        <input class="form-control" type="text" id="" name="values_replace_price">
                                     </div>
 
                                 </div>

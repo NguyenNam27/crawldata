@@ -50,10 +50,12 @@
                                             <td><a href="{{ $item->url }}">{{ $item->url }}</a></td>
                                             <td>{{ $item->created_at }}</td>
                                             <td>{{ ($item->status==1) ? 'Hiển thị' : 'Không Hiển thị' }}</td>
-
                                             <td>
                                                 <a href="{{URL::to('edit-partner/'.$item->id)}}" class="btn btn-warning btn-edit"><i class="fa fa-pencil"></i></a>
                                                 <a onclick="return confirm('Bạn có chắc là muốn xóa đối tác này ko?')" class="btn btn-danger btn-delete" href="{{URL::to('delete-partner/'.$item->id)}}"><i class="fa fa-trash"></i></a>
+{{--                                                <form class="" action="" method="POST">--}}
+{{--                                                    <button type="button" class="btn btn-primary">Crawl Data</button>--}}
+{{--                                                </form>--}}
                                             </td>
                                         </tr>
                                     @endforeach

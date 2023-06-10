@@ -4,10 +4,12 @@ namespace App\Console\Commands;
 
 use App\Models\CatalogProductOriginal;
 use App\Models\Category;
+use App\Models\Partner;
 use App\Models\Product;
 use App\Models\ProductPartner;
 use Carbon\Carbon;
 use Goutte\Client;
+use http\Client\Request;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -44,8 +46,19 @@ class CrawlProductPartnerCommand extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(Request $request)
     {
+//        try {
+
+//            $requestUrl = $request->input('url');
+//            $requestName = $request->input('name');
+//            $requestValue = $request->values;
+//            $jsonData = json_decode($requestValue);
+//            $valueClassCha = $jsonData->class_cha;
+//            $valueClassNam = $jsonData->class_name;
+//            $valueClassPrice = $jsonData->class_price;
+//            $valueClassLink = $jsonData->class_link;
+
         try {
             $client = new Client();
             $url = 'https://mediamart.vn/tag?key=hawonkoo';
@@ -106,46 +119,47 @@ class CrawlProductPartnerCommand extends Command
             dd($exception);
         }
 
-        $client = new Client();
-        $url = 'https://www.dienmayxanh.com/search?key=junger';
-        $category = new Category();
-        $category->url = $url;
-        $category->save();
-        $crawler = $client->request('GET', $url);
-        $dmxUrl = "https://www.dienmayxanh.com";
-
-        $existData = Product::selectRaw("CONCAT(name, '@@', DATE_FORMAT(created_at, '%Y-%m-%d')) as unique_product_by_date")
-            ->where('category_id', $dmxUrl)
-            ->get()
-            ->pluck('unique_product_by_date')
-            ->toArray();
-
-        $crawler->filter('ul.listproduct li.item')->each(
-            function (Crawler $node) use ($existData) {
-                $url = 'https://www.dienmayxanh.com';
-
-                $name = $node->filter('a h3')->text();
-                preg_match_all('/([\w\d]+)-.*/',$name , $code);;
-                $code_product1 = $code[0];
-                $code_product = implode(" ",$code_product1);
-                $price = $node->filter('.price')->text();
-
-                $link_product = $node->filter('a.main-contain')->attr('href');
-
-                $link = $url . $link_product;
-
-                $price_partner = preg_replace('/\D/', '', $price);
-
-                $productByNameAndDate = $name . '@@' . Carbon::now()->format('Y-m-d');
-                if (!in_array($productByNameAndDate, $existData)) {
-                    $product = new ProductPartner;
-                    $product->code_product_partner = $code_product;
-                    $product->name_product_partner = $name;
-                    $product->price_product_partner = empty($price_partner) ? 0 : $price_partner;
-                    $product->category_id = $url;
-                    $product->url_product_partner = $link;
-                    $product->save();
-                }
-            });
+//        $client = new Client();
+//        $url = 'https://www.dienmayxanh.com/search?key=junger';
+//        $category = new Category();
+//        $category->url = $url;
+//        $category->save();
+//        $crawler = $client->request('GET', $url);
+//        $dmxUrl = "https://www.dienmayxanh.com";
+//
+//        $existData = Product::selectRaw("CONCAT(name, '@@', DATE_FORMAT(created_at, '%Y-%m-%d')) as unique_product_by_date")
+//            ->where('category_id', $dmxUrl)
+//            ->get()
+//            ->pluck('unique_product_by_date')
+//            ->toArray();
+//
+//        $crawler->filter('ul.listproduct li.item')->each(
+//            function (Crawler $node) use ($existData) {
+//                $url = 'https://www.dienmayxanh.com';
+//
+//                $name = $node->filter('a h3')->text();
+//                preg_match_all('/([\w\d]+)-.*/',$name , $code);;
+//                $code_product1 = $code[0];
+//                $code_product = implode(" ",$code_product1);
+//                $price = $node->filter('.price')->text();
+//
+//                $link_product = $node->filter('a.main-contain')->attr('href');
+//
+//                $link = $url . $link_product;
+//
+//                $price_partner = preg_replace('/\D/', '', $price);
+//
+//                $productByNameAndDate = $name . '@@' . Carbon::now()->format('Y-m-d');
+//                if (!in_array($productByNameAndDate, $existData)) {
+//                    $product = new ProductPartner;
+//                    $product->code_product_partner = $code_product;
+//                    $product->name_product_partner = $name;
+//                    $product->price_product_partner = empty($price_partner) ? 0 : $price_partner;
+//                    $product->category_id = $url;
+//                    $product->url_product_partner = $link;
+//                    $product->save();
+//                }
+//            });
     }
+
 }
