@@ -2,15 +2,13 @@
 
 namespace App\Console\Commands;
 
-use App\Models\CatalogProductOriginal;
 use App\Models\Category;
-use App\Models\Partner;
 use App\Models\Product;
 use App\Models\ProductPartner;
 use Carbon\Carbon;
 use Goutte\Client;
-use http\Client\Request;
 use Illuminate\Console\Command;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\DomCrawler\Crawler;
@@ -48,66 +46,63 @@ class CrawlProductPartnerCommand extends Command
      */
     public function handle(Request $request)
     {
-//        try {
-
-//            $requestUrl = $request->input('url');
-//            $requestName = $request->input('name');
-//            $requestValue = $request->values;
-//            $jsonData = json_decode($requestValue);
-//            $valueClassCha = $jsonData->class_cha;
-//            $valueClassNam = $jsonData->class_name;
-//            $valueClassPrice = $jsonData->class_price;
-//            $valueClassLink = $jsonData->class_link;
+        $requestArr = [];
+        $requestUrl = $request->get('url', 'https://mediamart.vn/tag?key=hawonkoo');
+        $request['category_id'] = $request->get('category_id', 'https://mediamart.vn');
+        $requestArr['parent'] = $request->get('parent_element', '.product-list .card');
+        $requestArr['product_name'] = $request->get('product_name', 'p.product-name');
+        $requestArr['product_price'] = $request->get('product_price', 'p.product-price');
+        $requestArr['product_link'] = $request->get('product_link','a.product-item');
+        $requestArr['regex_product_name'] = $request->get('regex_product_name','/([\w\d]+)-.*/');
 
         try {
             $client = new Client();
-            $url = 'https://mediamart.vn/tag?key=hawonkoo';
             $category = new Category();
+            $url = $requestUrl;
             $category->url = $url;
             $category->save();
             $crawler = $client->request('GET', $url);
-            $listItems = $crawler->filter('.product-list .card');
-            $mediaMartUrl = 'https://mediamart.vn';
+            $listItems = $crawler->filter($requestArr['parent']);
+            $categoryId = $request['category_id'];
 
             $newProducts = [];
             if (count($listItems) > 0) {
                 $existData = Product::selectRaw("CONCAT(name, '@@', DATE_FORMAT(created_at, '%Y-%m-%d')) as unique_product_by_date")
-                    ->where('category_id', $mediaMartUrl)
+                    ->where('category_id', $categoryId)
                     ->get()
                     ->pluck('unique_product_by_date')
                     ->toArray();
                 try {
-                    DB::enableQueryLog();
+                    DB::beginTransaction();
                     $listItems->each(
-                        function (Crawler $node) use ($mediaMartUrl, $existData, &$newProducts) {
-                            $mediaMartUrl = 'https://mediamart.vn';
-                            $name = $node->filter('p.product-name')->text();
-                            preg_match_all('/([\w\d]+)-.*/',$name , $code);;
+                        function (Crawler $node) use ($categoryId, $existData, &$newProducts, $requestArr) {
+                            $name = $node->filter($requestArr['product_name'])->text();
+                            preg_match_all($requestArr['regex_product_name'],$name , $code);;
                             $code_product1 = $code[0];
                             $code_product = implode(" ",$code_product1);
-                            $price = $node->filter('p.product-price')->text();
+                            $price = $node->filter($requestArr['product_price'])->text();
                             preg_match('/([0-9\.,]+)\s?\w+/', $price, $m);
                             $price2 = $m[0];
                             $price3 = preg_replace('/\D/', '', $price2);
-                            $link_product = $node->filter('a.product-item')->attr('href');
-                            $link = $mediaMartUrl . $link_product;
+                            $link_product = $node->filter($requestArr['product_link'])->attr('href');
+                            $link = $categoryId . $link_product;
 
                             $now = Carbon::now()->format('Y-m-d');
                             $productNameByDate = $name . '@@' . $now;
                             if (!in_array($productNameByDate, $existData)) {
                                 $newProducts[] = [
-                                    'code_product_partner'=>$code_product,
-                                    'name_product_partner' => $name,
-                                    'price_product_partner' => $price3,
-                                    'category_id' => $mediaMartUrl,
-                                    'url_product_partner' => $link,
+                                    'code_product'=>$code_product,
+                                    'name' => $name,
+                                    'price_cost' => $price3,
+                                    'category_id' => $categoryId,
+                                    'link_product' => $link,
                                     'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                                 ];
                             }
                         });
 
-                    ProductPartner::insert($newProducts);
+                    Product::insert($newProducts);
                     DB::commit();
                 } catch (\Exception $exception) {
                     DB::rollBack();

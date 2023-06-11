@@ -12,7 +12,7 @@ class Partner extends Model
     public $timestamps=true;
 
     protected $table = 'partners';
-    protected $fillable = ['name', 'url', 'values','status'];
+    protected $fillable = ['name', 'url', 'category_id', 'values','status'];
 
     protected $casts = [
         'values' => 'array',

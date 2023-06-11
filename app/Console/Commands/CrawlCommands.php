@@ -62,7 +62,7 @@ class CrawlCommands extends Command
                     ->pluck('unique_product_by_date')
                     ->toArray();
                 try {
-                    DB::enableQueryLog();
+                    DB::beginTransaction();
                     $listItems->each(
                         function (Crawler $node) use ($mediaMartUrl, $existData, &$newProducts) {
                             $mediaMartUrl = 'https://mediamart.vn';

@@ -22,6 +22,7 @@ use App\Http\Controllers\ProductController;
 |
 */
 
+Route::get('/crawl-data', [PartnerController::class,'crawl'])->name('crawl-data');
 Route::get('/run-command', [RunCommandController::class,'runCommand'])->name('run-command');
 Route::get('register', [AuthController::class, 'register'])->name('register');
 Route::post('post-register', [AuthController::class, 'postRegister'])->name('register.post');
