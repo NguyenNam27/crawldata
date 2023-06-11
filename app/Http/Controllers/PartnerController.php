@@ -34,10 +34,10 @@ class PartnerController extends Controller
             'url'=> $request->url,
             'category_id'=> $request->category_id,
             'values'=>[
-                'class_parent'=>$request->input('values_cha'),
-                'class_name'=>$request->input('values_name'),
-                'class_price'=>$request->input('values_price'),
-                'class_link'=>$request->input('values_link'),
+                'class_parent'=>$request->input('class_parent'),
+                'class_name'=>$request->input('class_name'),
+                'class_price'=>$request->input('class_price'),
+                'class_link'=>$request->input('class_link'),
             ],
         ];
 
@@ -61,10 +61,10 @@ class PartnerController extends Controller
             'url'=>$request->url,
             'category_id' => $request->input('category_id'),
             'values'=>[
-                'class_parent'=>$request->input('values_cha'),
-                'class_name'=>$request->input('values_name'),
-                'class_price'=>$request->input('values_price'),
-                'class_link'=>$request->input('values_link'),
+                'class_parent'=>$request->input('class_parent'),
+                'class_name'=>$request->input('class_name'),
+                'class_price'=>$request->input('class_price'),
+                'class_link'=>$request->input('class_link'),
             ],
             'status'=>$request->status
         ];
@@ -98,10 +98,10 @@ class PartnerController extends Controller
         $requestArr = [];
         $requestUrl = $partner->url;
         $categoryId = $partner->category_id;
-        $requestArr['parent'] = $values->parent_element;
-        $requestArr['product_name'] = $values->product_name;
-        $requestArr['product_price'] = $values->product_price;
-        $requestArr['product_link'] = $values->product_link;
+        $requestArr['class_parent'] = $values->class_parent;
+        $requestArr['class_name'] = $values->class_name;
+        $requestArr['class_price'] = $values->class_price;
+        $requestArr['class_link'] = $values->class_link;
 
         try {
             $client = new Client();
@@ -110,7 +110,7 @@ class PartnerController extends Controller
             $category->url = $url;
             $category->save();
             $crawler = $client->request('GET', $url);
-            $listItems = $crawler->filter($requestArr['parent']);
+            $listItems = $crawler->filter($requestArr['class_parent']);
 
             $newProducts = [];
             if (count($listItems) > 0) {
@@ -123,15 +123,15 @@ class PartnerController extends Controller
                     DB::beginTransaction();
                     $listItems->each(
                         function (Crawler $node) use ($categoryId, $existData, &$newProducts, $requestArr) {
-                            $name = $node->filter($requestArr['product_name'])->text();
+                            $name = $node->filter($requestArr['class_name'])->text();
                             preg_match_all('/([\w\d]+)-.*/',$name , $code);;
                             $code_product1 = $code[0];
                             $code_product = implode(" ",$code_product1);
-                            $price = $node->filter($requestArr['product_price'])->text();
+                            $price = $node->filter($requestArr['class_price'])->text();
                             preg_match('/([0-9\.,]+)\s?\w+/', $price, $m);
                             $price2 = $m[0];
                             $price3 = preg_replace('/\D/', '', $price2);
-                            $link_product = $node->filter($requestArr['product_link'])->attr('href');
+                            $link_product = $node->filter($requestArr['class_link'])->attr('href');
                             $link = $categoryId . $link_product;
 
                             $now = Carbon::now()->format('Y-m-d');
