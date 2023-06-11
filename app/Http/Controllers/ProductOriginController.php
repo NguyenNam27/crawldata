@@ -48,7 +48,6 @@ class ProductOriginController extends Controller
         $data['price_product_original'] = $request->price_product_original;
         $data['url_product_original'] = $request->url_product_original;
         $data['status'] = $request->status;
-//        dd($data);
         DB::table('product_originals')->where('id',$id)->update($data);
         Session::put('message','Cập nhập sản phẩm gốc thành công');
         return Redirect::to('list-product-original');

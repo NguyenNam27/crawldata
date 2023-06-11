@@ -32,7 +32,6 @@ class PartnerController extends Controller
                 'class_price'=>$request->input('values_price'),
                 'class_link'=>$request->input('values_link'),
             ],
-
         ];
         Partner::create($data);
         Session::put('message','Thêm đối tác thành công');
